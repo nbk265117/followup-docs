@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAAT - Follow Up BOA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Calibri', 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #333;
+            background: white;
+            padding: 1.5cm;
+            max-width: 21cm;
+            margin: 0 auto;
+        }
+        h1 { font-size: 16pt; color: #003D7C; text-align: center; margin-bottom: 0.5cm; border-bottom: 2px solid #003D7C; padding-bottom: 0.3cm; }
+        h2 { font-size: 13pt; color: #003D7C; margin: 0.6cm 0 0.3cm 0; border-bottom: 1px solid #003D7C; padding-bottom: 0.15cm; }
+        h3 { font-size: 11pt; color: #003D7C; margin: 0.4cm 0 0.2cm 0; }
+        p { margin-bottom: 0.3cm; text-align: justify; }
+        table { width: 100%; border-collapse: collapse; margin: 0.3cm 0 0.5cm 0; font-size: 10pt; }
+        th, td { border: 1px solid #666; padding: 0.15cm 0.25cm; text-align: left; vertical-align: top; }
+        th { background: #003D7C; color: white; font-weight: bold; }
+        tr:nth-child(even) { background: #f5f5f5; }
+        .header-table { margin-bottom: 0.5cm; }
+        .header-table td { border: 1px solid #999; }
+        .header-table th { background: #4A90E2; }
+        ul, ol { margin-left: 0.6cm; margin-bottom: 0.3cm; }
+        li { margin-bottom: 0.1cm; }
+        .logo { text-align: center; margin-bottom: 0.5cm; }
+        .logo img { height: 1.5cm; }
+        .subtitle { text-align: center; font-size: 12pt; color: #666; margin-bottom: 0.5cm; }
+        .version-box { background: #f0f0f0; padding: 0.3cm; margin: 0.3cm 0; border-left: 3px solid #003D7C; }
+        .section { margin-bottom: 0.5cm; }
+        .note { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 0.2cm 0.3cm; margin: 0.2cm 0; font-size: 10pt; }
+        .checkbox { font-family: 'Segoe UI Symbol', sans-serif; }
+        .toc { background: #f8f8f8; padding: 0.4cm; margin: 0.5cm 0; }
+        .toc a { color: #003D7C; text-decoration: none; }
+        .toc ul { list-style: none; margin-left: 0; }
+        .toc li { margin: 0.1cm 0; }
+        .page-break { page-break-before: always; }
+        @media print {
+            body { padding: 0; }
+            .page-break { page-break-before: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- En-tête -->
+    <div style="text-align: center; margin-bottom: 0.5cm;">
+        <div style="font-size: 10pt; color: #666;">EURAFRIC INFORMATION - BANK OF AFRICA</div>
+    </div>
+
+    <h1>DOSSIER D'ARCHITECTURE APPLICATIVE ET TECHNIQUE (DAAT)</h1>
+    <div class="subtitle">Projet Follow Up BOA - MVP</div>
+
+    <!-- Cartouche -->
+    <div class="section">
+        <table class="header-table">
+            <tr>
+                <th colspan="2">REDACTEUR</th>
+                <th colspan="2">VERIFICATEUR</th>
+            </tr>
+            <tr>
+                <td><strong>Nom</strong></td>
+                <td>Ayoub YOUB</td>
+                <td><strong>Nom</strong></td>
+                <td>Asmae ALABOUCH</td>
+            </tr>
+            <tr>
+                <td><strong>Fonction</strong></td>
+                <td>Tech Lead</td>
+                <td><strong>Fonction</strong></td>
+                <td>Chef de Projet</td>
+            </tr>
+            <tr>
+                <td><strong>Entite</strong></td>
+                <td>Digital Dev Transverse</td>
+                <td><strong>Entite</strong></td>
+                <td>Digital Dev Transverse</td>
+            </tr>
+        </table>
+
+        <table class="header-table">
+            <tr>
+                <th>Version</th>
+                <th>Date</th>
+                <th>Auteur</th>
+                <th>Nature des modifications</th>
+            </tr>
+            <tr>
+                <td>1.0</td>
+                <td>12/03/2026</td>
+                <td>Ayoub YOUB</td>
+                <td>Creation du document</td>
+            </tr>
+        </table>
+
+        <table class="header-table">
+            <tr>
+                <th>Organisme/Entite</th>
+                <th>Approbation</th>
+            </tr>
+            <tr>
+                <td>Departement Digital</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Departement Urbanisation / Architecture</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <table class="header-table">
+            <tr>
+                <th>Diffusion</th>
+                <th>Pour</th>
+            </tr>
+            <tr>
+                <td>Equipe Projet Follow Up</td>
+                <td>Information / Action</td>
+            </tr>
+            <tr>
+                <td>Equipe Architecture</td>
+                <td>Validation</td>
+            </tr>
+        </table>
+
+        <table class="header-table">
+            <tr>
+                <th colspan="2">Reference des textes utilises</th>
+            </tr>
+            <tr>
+                <td>[1]</td>
+                <td>Note de lancement du projet Follow Up</td>
+            </tr>
+            <tr>
+                <td>[2]</td>
+                <td>Specifications fonctionnelles Follow Up MVP</td>
+            </tr>
+            <tr>
+                <td>[3]</td>
+                <td>Standards LOGIN et Mot de passe BOA</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Sommaire -->
+    <div class="toc">
+        <h2 style="border: none; margin-top: 0;">SOMMAIRE</h2>
+        <ul>
+            <li>1. Objet du document</li>
+            <li>2. Description du projet
+                <ul style="margin-left: 0.5cm;">
+                    <li>2.1 Objectifs du projet</li>
+                    <li>2.2 Perimetre du document</li>
+                    <li>2.3 Acteurs et dates cles</li>
+                </ul>
+            </li>
+            <li>3. Niveaux de service</li>
+            <li>4. Architecture fonctionnelle</li>
+            <li>5. Architecture applicative</li>
+            <li>6. Donnees</li>
+            <li>7. Utilisateurs</li>
+            <li>8. Migration de l'existant</li>
+            <li>9. Securite</li>
+            <li>10. Architecture technique</li>
+            <li>11. Prerequis techniques</li>
+            <li>12. Matrice de flux</li>
+            <li>13. Environnements</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 1. Objet du document -->
+    <h2>1. OBJET DU DOCUMENT</h2>
+    <p>
+        Ce document a pour objectif de decrire l'architecture applicative et technique relatives aux specifications
+        fonctionnelles liees a l'application <strong>Follow Up BOA</strong> dans sa version <strong>MVP (Minimum Viable Product)</strong>.
+    </p>
+    <p>
+        BOA Follow Up est une solution digitale dediee a l'accompagnement et au pilotage des pratiques commerciales
+        et manageriales du reseau. Elle a vocation a devenir l'outil de reference pour le suivi de l'appropriation
+        des pratiques pour une transformation mesurable, homogene et durable des pratiques terrain.
+    </p>
+
+    <!-- 2. Description du projet -->
+    <h2>2. DESCRIPTION DU PROJET</h2>
+
+    <h3>2.1 Objectifs du projet</h3>
+    <ul>
+        <li>Harmoniser les pratiques de suivi et d'accompagnement terrain entre les differentes regions et acteurs afin d'assurer une approche coherente et homogene</li>
+        <li>Structurer et fiabiliser la collecte et l'exploitation des donnees terrain pour une prise de decision efficace</li>
+        <li>Renforcer la tracabilite des actions d'accompagnement, du diagnostic initial jusqu'au suivi des resultats, pour garantir un pilotage transparent et mesurable</li>
+        <li>Offrir au management une vision continue et consolidee de l'appropriation des pratiques sur le terrain, grace a des outils de reporting et de pilotage adaptes</li>
+        <li>Fournir une interface moderne et intuitive accessible sur tous supports (desktop, mobile, tablette)</li>
+        <li>Permettre la saisie d'observations terrain avec mode PWA</li>
+        <li>Assurer la tracabilite complete de toutes les actions via des audit logs detailles</li>
+        <li>S'integrer avec le systeme d'information BOA (ASAL pour l'annuaire collaborateurs)</li>
+        <li>Garantir un haut niveau de securite conforme aux standards BOA</li>
+        <li>Faciliter le pilotage et l'analyse des donnees par le management</li>
+    </ul>
+
+    <h3>2.2 Perimetre du document</h3>
+    <p>Ce document couvre l'architecture de la version MVP comprenant :</p>
+    <ul>
+        <li><strong>Module Administration</strong> : Gestion des utilisateurs, habilitations, parametrage</li>
+        <li><strong>Module Observations</strong> : Saisie et consultation des observations</li>
+        <li><strong>Module Authentification</strong> : Connexion securisee via Keycloak SSO (socle EAI)</li>
+    </ul>
+
+    <h3>2.3 Acteurs et dates cles</h3>
+    <table>
+        <tr>
+            <th>Role</th>
+            <th>Nom</th>
+            <th>Entite</th>
+        </tr>
+        <tr>
+            <td>Chef de Projet</td>
+            <td>Asmae ALABOUCH</td>
+            <td>Digital Dev Transverse</td>
+        </tr>
+        <tr>
+            <td>Product Owner</td>
+            <td>Salwa NANA</td>
+            <td>Bank of Africa</td>
+        </tr>
+        <tr>
+            <td>Tech Lead</td>
+            <td>Ayoub YOUB</td>
+            <td>Digital Dev Transverse</td>
+        </tr>
+        <tr>
+            <td>Scrum Master</td>
+            <td>Zakaria HAMMOUDI</td>
+            <td>Eurafric Information</td>
+        </tr>
+        <tr>
+            <td>PO Metier</td>
+            <td>Mohamed Amine KHEDIDJ / Houssam Bouzarzar</td>
+            <td>Bank of Africa</td>
+        </tr>
+        <tr>
+            <td>Designer UI/UX</td>
+            <td>Youssef Barouch</td>
+            <td>Eurafric Information</td>
+        </tr>
+    </table>
+
+    <div class="note" style="background: #eff6ff; border-color: #3b82f6;">
+        <strong>🎨 Maquettes UI/UX :</strong> Les maquettes sont disponibles sur Figma<br>
+        <a href="https://www.figma.com/design/egjSewQnUHxSSyUZimkDD4/BOA-Follow-Up?node-id=170-2485" target="_blank">https://www.figma.com/design/egjSewQnUHxSSyUZimkDD4/BOA-Follow-Up</a>
+    </div>
+
+    <!-- 3. Niveaux de service -->
+    <h2>3. NIVEAUX DE SERVICE</h2>
+
+    <h3>3.1 Disponibilite</h3>
+    <p>Le systeme Follow Up doit assurer une disponibilite de <strong>99%</strong> (hors maintenance planifiee).</p>
+
+    <h3>3.2 Ouverture</h3>
+    <table>
+        <tr>
+            <th>Mode</th>
+            <th>Jours</th>
+            <th>Horaires</th>
+            <th>Selection</th>
+        </tr>
+        <tr>
+            <td>Standard</td>
+            <td>5 jours / 7</td>
+            <td>8h00 - 18h30</td>
+            <td class="checkbox">&#9746;</td>
+        </tr>
+        <tr>
+            <td>Maximum</td>
+            <td>7 jours / 7</td>
+            <td>24h / 24</td>
+            <td class="checkbox">&#9744;</td>
+        </tr>
+    </table>
+
+    <h3>3.3 Mode degrade</h3>
+    <p>En cas de dysfonctionnement partiel, le systeme permet :</p>
+    <ul>
+        <li>Consultation en lecture seule des observations existantes</li>
+        <li>Les donnees saisies en mode PWA seront synchronisees au retablissement</li>
+    </ul>
+
+    <h3>3.4 Secours</h3>
+    <p>L'application etant hebergee dans le <strong>perimetre Cloud</strong>, le plan de secours sera conforme aux standards Cloud BOA.</p>
+
+    <!-- 4. Architecture fonctionnelle -->
+    <h2>4. RAPPEL DE L'ARCHITECTURE FONCTIONNELLE</h2>
+    <p>L'architecture fonctionnelle comprend les modules suivants :</p>
+    <table>
+        <tr>
+            <th>Module</th>
+            <th>Description</th>
+            <th>Utilisateurs</th>
+        </tr>
+        <tr>
+            <td><strong>Administration</strong></td>
+            <td>Gestion utilisateurs, roles, habilitations, parametrage formulaires</td>
+            <td>Administrateurs</td>
+        </tr>
+        <tr>
+            <td><strong>Observations</strong></td>
+            <td>Saisie, consultation et historique des observations</td>
+            <td>Animateurs, Directeurs, Managers</td>
+        </tr>
+        <tr>
+            <td><strong>Dashboard</strong></td>
+            <td>Tableaux de bord, KPIs, statistiques</td>
+            <td>Directeurs, Management</td>
+        </tr>
+        <tr>
+            <td><strong>Profil</strong></td>
+            <td>Consultation profil utilisateur et rattachement</td>
+            <td>Tous</td>
+        </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 5. Architecture applicative -->
+    <h2>5. ARCHITECTURE APPLICATIVE</h2>
+
+    <h3>5.1 Schema d'architecture</h3>
+    <div style="background: #f5f5f5; padding: 0.5cm; font-family: monospace; font-size: 9pt; white-space: pre; overflow-x: auto;">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              UTILISATEURS                                    │
+│     Animateurs, Directeurs, Managers          Administrateurs               │
+└──────────────────────────┬─────────────────────────────┬────────────────────┘
+                           │                             │
+                           ▼                             ▼
+┌──────────────────────────────────┐    ┌──────────────────────────────────────┐
+│     FOLLOWUP-CLIENT              │    │     FOLLOWUP-ADMIN                   │
+│     (Microfrontend Terrain)      │    │     (Microfrontend Backoffice)       │
+│     Angular 15 + Single-SPA      │    │     Angular 15 + Single-SPA          │
+│     eai-lib-material             │    │     eai-lib-material                 │
+└──────────────────────────┬───────┘    └──────────────────┬───────────────────┘
+                           │                               │
+                           └───────────────┬───────────────┘
+                                           │ HTTPS / REST API / JWT
+                                           ▼
+                           ┌───────────────────────────────────────┐
+                           │         FOLLOWUP-SERVEUR              │
+                           │         (Backend API - Hexagonal)     │
+                           │         Socle EAI / Spring Boot / J17 │
+                           └───────────────┬───────────────────────┘
+                                           │
+               ┌───────────────────────────┼───────────────────────────┐
+               │                           │                           │
+               ▼                           ▼                           ▼
+┌──────────────────────┐    ┌──────────────────────┐    ┌──────────────────────┐
+│   PostgreSQL         │    │   ASAL               │    │   Keycloak           │
+│   (Base de donnees)  │    │   (Annuaire)         │    │   (Auth)             │
+└──────────────────────┘    └──────────────────────┘    └──────────────────────┘
+               │                                                    │
+               │            ┌──────────────────────┐               │
+               └───────────►│   Apache Kafka       │◄──────────────┘
+                            │   (Messaging)        │
+                            └──────────────────────┘
+    </div>
+
+    <h3>5.2 Description des services applicatifs</h3>
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Criticite</th>
+            <th>Description</th>
+            <th>Existant O/N</th>
+        </tr>
+        <tr>
+            <td>msiboa-oc-api-followup-serveur</td>
+            <td>Haute</td>
+            <td>Backend API REST - Logique metier, securite, acces donnees</td>
+            <td>N</td>
+        </tr>
+        <tr>
+            <td>msiboa-cc-mf-followup-client</td>
+            <td>Haute</td>
+            <td>Frontend terrain - Saisie et consultation observations (PWA)</td>
+            <td>N</td>
+        </tr>
+        <tr>
+            <td>msiboa-cc-mf-followup-admin</td>
+            <td>Moyenne</td>
+            <td>Frontend backoffice - Administration et parametrage</td>
+            <td>N</td>
+        </tr>
+    </table>
+
+    <h3>5.3 Description des flux</h3>
+
+    <p><strong>Flux en entree :</strong></p>
+    <table>
+        <tr>
+            <th>N°</th>
+            <th>Description</th>
+            <th>Frequence</th>
+            <th>Application origine</th>
+            <th>Mode transfert</th>
+        </tr>
+        <tr>
+            <td>F1</td>
+            <td>Recuperation infos collaborateur</td>
+            <td>A la demande</td>
+            <td>ASAL (accesseur-asal)</td>
+            <td>SOAP / HTTPS</td>
+        </tr>
+        <tr>
+            <td>F2</td>
+            <td>Authentification utilisateur</td>
+            <td>A la connexion</td>
+            <td>Keycloak + LDAP</td>
+            <td>OIDC / HTTPS</td>
+        </tr>
+    </table>
+
+    <p><strong>Flux en sortie :</strong></p>
+    <table>
+        <tr>
+            <th>N°</th>
+            <th>Description</th>
+            <th>Frequence</th>
+            <th>Application cible</th>
+            <th>Mode transfert</th>
+        </tr>
+        <tr>
+            <td>F3</td>
+            <td>Notifications asynchrones</td>
+            <td>A la demande</td>
+            <td>Kafka (Socle EAI)</td>
+            <td>Kafka Producers / TCP</td>
+        </tr>
+    </table>
+
+    <h3>5.4 Performances</h3>
+    <table>
+        <tr>
+            <th>Type d'action</th>
+            <th>Temps de reponse</th>
+        </tr>
+        <tr>
+            <td>Affichage page / liste</td>
+            <td>&lt; 2 secondes</td>
+        </tr>
+        <tr>
+            <td>Soumission formulaire</td>
+            <td>&lt; 3 secondes</td>
+        </tr>
+        <tr>
+            <td>Recherche collaborateur (ASAL)</td>
+            <td>&lt; 2 secondes</td>
+        </tr>
+        <tr>
+            <td>Generation rapport</td>
+            <td>&lt; 5 secondes</td>
+        </tr>
+    </table>
+
+    <h3>5.5 Integration ASAL (Annuaire Collaborateurs)</h3>
+    <div class="note" style="background: #ecfdf5; border-color: #10b981;">
+        <strong>Statut : Valide - Environnement recette fonctionnel</strong><br>
+        Contact : Badr MERZAQ | Documentation technique recue et validee
+    </div>
+
+    <p><strong>Caracteristiques techniques :</strong></p>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Valeur</th>
+        </tr>
+        <tr>
+            <td>Protocole</td>
+            <td>SOAP 1.2 / HTTPS</td>
+        </tr>
+        <tr>
+            <td>Alias UDDI</td>
+            <td><code>accesseur-asal</code></td>
+        </tr>
+        <tr>
+            <td>Codes de test</td>
+            <td>GRCTST01 a GRCTST10</td>
+        </tr>
+        <tr>
+            <td>Code Banque</td>
+            <td>02281 (BMCE) / 02282 (RMAW)</td>
+        </tr>
+        <tr>
+            <td>Code Federation</td>
+            <td>35 (BMCE) / 54 (RMAW)</td>
+        </tr>
+    </table>
+
+    <p><strong>Services ASAL utilises :</strong></p>
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Type</th>
+        </tr>
+        <tr>
+            <td>Recherche par code SAS</td>
+            <td><code>RechSalCodeSasUC</code></td>
+            <td>Recupere infos collaborateur par code SAS</td>
+            <td>Unitaire</td>
+        </tr>
+        <tr>
+            <td>Recherche par matricule</td>
+            <td><code>RechSalMatUC</code></td>
+            <td>Recupere infos collaborateur par matricule</td>
+            <td>Unitaire</td>
+        </tr>
+        <tr>
+            <td>Responsable guichet</td>
+            <td><code>RechRespGuiUC</code></td>
+            <td>Recupere le responsable d'un guichet</td>
+            <td>Unitaire</td>
+        </tr>
+        <tr>
+            <td>Responsable N+1</td>
+            <td><code>RechRespSupGuiUC</code></td>
+            <td>Recupere le responsable N+1 d'un guichet</td>
+            <td>Unitaire</td>
+        </tr>
+        <tr>
+            <td>Salaries d'un guichet</td>
+            <td><code>RechListSalGuiUC</code></td>
+            <td>Liste des salaries d'un guichet</td>
+            <td>Liste</td>
+        </tr>
+        <tr>
+            <td>Salaries d'un etablissement</td>
+            <td><code>RechListSalEtbUC</code></td>
+            <td>Liste des salaries d'un etablissement</td>
+            <td>Liste</td>
+        </tr>
+    </table>
+
+    <p><strong>Donnees retournees par ASAL :</strong> codeSas, nom, prenom, civilite, email, codeGuichet, codeBanque, matricule, codeSection, libEmploi, codeObjOrg, libObjOrg, typeObjOrg, lstTels</p>
+
+    <div class="note" style="background: #fffbeb; border-color: #f59e0b;">
+        <strong>⚠️ Prerequis pour tester ASAL :</strong><br>
+        Demander l'ouverture reseau vers :<br><br>
+        <strong>URL :</strong> <code>https://vip-proxy-webfarm-dy.eurafric.com/flux/home.jsp</code><br>
+        <strong>IP :</strong> <code>10.241.184.110</code><br>
+        <strong>Port :</strong> <code>443</code>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 6. Donnees -->
+    <h2>6. DONNEES</h2>
+
+    <h3>6.1 Nature</h3>
+    <p>Les donnees gerees par l'application sont de nature <strong>administrative et operationnelle</strong> (observations, evaluations, habilitations).</p>
+
+    <h3>6.2 Volumetrie</h3>
+    <table>
+        <tr>
+            <th>Type de donnee</th>
+            <th>Volumetrie initiale</th>
+            <th>Frequence MAJ</th>
+            <th>Evolution annuelle</th>
+        </tr>
+        <tr>
+            <td>Utilisateurs</td>
+            <td>~500</td>
+            <td>Mensuelle</td>
+            <td>+10%</td>
+        </tr>
+        <tr>
+            <td>Observations</td>
+            <td>~10 000</td>
+            <td>Quotidienne</td>
+            <td>+20%</td>
+        </tr>
+        <tr>
+            <td>Modeles formulaires</td>
+            <td>~20</td>
+            <td>Trimestrielle</td>
+            <td>+5%</td>
+        </tr>
+        <tr>
+            <td>Audit logs</td>
+            <td>~50 000</td>
+            <td>Quotidienne</td>
+            <td>+30%</td>
+        </tr>
+    </table>
+
+    <h3>6.3 Sauvegarde</h3>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Type</th>
+            <th>Duree</th>
+            <th>Mode</th>
+            <th>Frequence</th>
+            <th>Retention</th>
+        </tr>
+        <tr>
+            <td>Base PostgreSQL</td>
+            <td>BD</td>
+            <td>Permanente</td>
+            <td>Full + Incremental</td>
+            <td>Quotidienne</td>
+            <td>12 mois</td>
+        </tr>
+        <tr>
+            <td>Fichiers application</td>
+            <td>Repertoire</td>
+            <td>Permanente</td>
+            <td>Full</td>
+            <td>Hebdomadaire</td>
+            <td>3 mois</td>
+        </tr>
+        <tr>
+            <td>Logs applicatifs</td>
+            <td>Repertoire</td>
+            <td>Temporaire</td>
+            <td>Full</td>
+            <td>Quotidienne</td>
+            <td>1 mois</td>
+        </tr>
+    </table>
+
+    <!-- 7. Utilisateurs -->
+    <h2>7. UTILISATEURS</h2>
+
+    <h3>7.1 Localisation</h3>
+    <p>Le nombre d'utilisateurs disposant de l'outil Follow Up est estime a <strong>~500 utilisateurs</strong>. Cela concerne les entites suivantes :</p>
+    <ul>
+        <li>Reseau d'agences (Directeurs d'agence, Conseillers)</li>
+        <li>Centres d'Affaires - CAF (Directeurs CAF, Charges d'affaires)</li>
+        <li>Centres d'Excellence Multi-Marches - CEMM</li>
+        <li>Directions regionales (Animateurs)</li>
+        <li>Siege (Administrateurs, Management)</li>
+    </ul>
+
+    <h3>7.2 Postes declares</h3>
+    <p>Nombre de postes utilisateurs : <strong>~500</strong></p>
+
+    <h3>7.3 Postes simultanes</h3>
+    <p>Nombre de postes utilisateurs concurrents maximum : <strong>~100</strong></p>
+
+    <!-- 8. Migration -->
+    <h2>8. MIGRATION DE L'EXISTANT</h2>
+    <table>
+        <tr>
+            <th>Donnees a migrer</th>
+            <th>Source de reprise</th>
+            <th>Elements repris</th>
+            <th>Profondeur</th>
+        </tr>
+        <tr>
+            <td>Historique observations</td>
+            <td>AppSheet</td>
+            <td>Observations existantes</td>
+            <td>A definir avec le metier</td>
+        </tr>
+        <tr>
+            <td>Modeles formulaires</td>
+            <td>AppSheet / JotForm</td>
+            <td>Structure des formulaires</td>
+            <td>Formulaires actifs</td>
+        </tr>
+    </table>
+    <p class="note"><strong>Note :</strong> La strategie de migration sera definie en concertation avec l'equipe metier.</p>
+
+    <div class="page-break"></div>
+
+    <!-- 9. Securite -->
+    <h2>9. SECURITE</h2>
+
+    <h3>9.1 Identification et authentification</h3>
+    <p>L'identification et l'authentification des utilisateurs s'appuient sur :</p>
+    <ul>
+        <li><strong>Keycloak (Plugin socle EAI)</strong> : Authentification SSO centralisee</li>
+        <li><strong>JWT (JSON Web Token)</strong> : Gestion des sessions stateless</li>
+        <li><strong>OIDC/OAuth2</strong> : Protocole d'authentification standard</li>
+    </ul>
+    <p>Les normes en vigueur en matiere de login et mots de passe seront adoptees (cf. Standards LOGIN et Mot de passe BOA).</p>
+
+    <h3>9.2 Habilitations</h3>
+    <p>Le systeme Follow Up implemente une gestion des habilitations basee sur <strong>RBAC (Role-Based Access Control)</strong> :</p>
+    <table>
+        <tr>
+            <th>Role</th>
+            <th>Description</th>
+            <th>Permissions principales</th>
+        </tr>
+        <tr>
+            <td>Administrateur</td>
+            <td>Gestion complete du systeme</td>
+            <td>CRUD utilisateurs, parametrage, audit logs</td>
+        </tr>
+        <tr>
+            <td>Observateur (DA, RCP, etc.)</td>
+            <td>Saisie des observations</td>
+            <td>Creer, consulter observations de son perimetre</td>
+        </tr>
+        <tr>
+            <td>Observe</td>
+            <td>Consultation de son historique</td>
+            <td>Lecture seule de ses observations</td>
+        </tr>
+        <tr>
+            <td>Animateur</td>
+            <td>Supervision regionale</td>
+            <td>Consulter observations de sa region</td>
+        </tr>
+    </table>
+
+    <h3>9.3 Confidentialite</h3>
+    <ul>
+        <li>Communications chiffrees en <strong>HTTPS/TLS 1.3</strong></li>
+        <li>Donnees sensibles chiffrees en base</li>
+        <li>Acces aux donnees restreint selon le perimetre utilisateur</li>
+    </ul>
+
+    <h3>9.4 Tracabilite et auditabilite</h3>
+    <ul>
+        <li><strong>Audit logs complets</strong> : Qui, Quoi, Quand, Ou</li>
+        <li>Conservation des logs selon la politique de retention BOA</li>
+        <li>Interface de consultation des logs pour les administrateurs</li>
+    </ul>
+
+    <!-- 10. Architecture technique -->
+    <h2>10. ARCHITECTURE TECHNIQUE</h2>
+
+    <h3>10.1 Schema</h3>
+    <p>L'architecture technique repose sur une architecture <strong>3-tiers</strong> deployee dans le <strong>perimetre Cloud BOA</strong>.</p>
+
+    <h3>10.2 Poste de travail</h3>
+    <p>Client leger - Navigateur web moderne (Chrome, Firefox, Edge).</p>
+    <p>L'application est egalement accessible en mode <strong>PWA</strong> (Progressive Web App) sur mobile.</p>
+
+    <h3>10.3 Serveur Web (Microfrontend)</h3>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Technologie</th>
+            <th>Version</th>
+        </tr>
+        <tr>
+            <td>Reverse Proxy / Load Balancer</td>
+            <td>Nginx</td>
+            <td>1.24+</td>
+        </tr>
+        <tr>
+            <td>Frontend Runtime</td>
+            <td>Node.js (build) / Static files</td>
+            <td>18 LTS</td>
+        </tr>
+        <tr>
+            <td>Framework Frontend</td>
+            <td>Angular + TypeScript</td>
+            <td>15.x / 4.9.x</td>
+        </tr>
+        <tr>
+            <td>Architecture Microfrontend</td>
+            <td>Single-SPA</td>
+            <td>8.x</td>
+        </tr>
+        <tr>
+            <td>UI Components</td>
+            <td>eai-lib-material (Socle EAI)</td>
+            <td>0.2.x</td>
+        </tr>
+        <tr>
+            <td>Internationalisation</td>
+            <td>@ngx-translate</td>
+            <td>14.x</td>
+        </tr>
+    </table>
+
+    <h3>10.4 Serveur d'application (Architecture Hexagonale)</h3>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Technologie</th>
+            <th>Version</th>
+        </tr>
+        <tr>
+            <td>Socle Parent</td>
+            <td>msiboa-api-parent (EAI)</td>
+            <td>2.0.10</td>
+        </tr>
+        <tr>
+            <td>Runtime</td>
+            <td>Java (OpenJDK)</td>
+            <td>17 LTS</td>
+        </tr>
+        <tr>
+            <td>Framework</td>
+            <td>Spring Boot</td>
+            <td>3.x</td>
+        </tr>
+        <tr>
+            <td>Architecture</td>
+            <td>Hexagonale (Ports & Adapters)</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Authentification</td>
+            <td>Keycloak + LDAP</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>Messaging</td>
+            <td>Apache Kafka</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>ORM</td>
+            <td>Spring Data JPA / Hibernate</td>
+            <td>6.x</td>
+        </tr>
+        <tr>
+            <td>Build</td>
+            <td>Maven (Multi-modules)</td>
+            <td>3.9.x</td>
+        </tr>
+    </table>
+
+    <p><strong>Structure multi-modules :</strong></p>
+    <ul>
+        <li><code>followup-serveur-domain</code> - Logique metier (domain-core + application-service)</li>
+        <li><code>followup-serveur-application</code> - Controllers REST</li>
+        <li><code>followup-serveur-dataaccess</code> - Repositories JPA</li>
+        <li><code>followup-serveur-messaging</code> - Kafka producers/consumers</li>
+        <li><code>followup-serveur-infrastructure</code> - Integrations externes (ASAL, LDAP)</li>
+        <li><code>followup-serveur-container</code> - Module de demarrage Spring Boot</li>
+    </ul>
+
+    <h3>10.5 Serveur de base de donnees</h3>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Technologie</th>
+            <th>Version</th>
+        </tr>
+        <tr>
+            <td>SGBDR</td>
+            <td><strong>PostgreSQL</strong></td>
+            <td>15.x / 16.x</td>
+        </tr>
+        <tr>
+            <td>Driver JDBC</td>
+            <td>PostgreSQL JDBC Driver</td>
+            <td>42.x</td>
+        </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 11. Prerequis techniques -->
+    <h2>11. PREREQUIS TECHNIQUES</h2>
+
+    <h3>11.1 Site de production (Cloud)</h3>
+    <table>
+        <tr>
+            <th>Serveur</th>
+            <th>OS</th>
+            <th>Logiciels</th>
+            <th>CPU</th>
+            <th>RAM</th>
+            <th>Disque</th>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>Linux</td>
+            <td>Java 17, Spring Boot, Socle EAI</td>
+            <td>4 vCPU</td>
+            <td>8 Go</td>
+            <td>50 Go</td>
+        </tr>
+        <tr>
+            <td>Frontend (static)</td>
+            <td>Linux</td>
+            <td>Nginx</td>
+            <td>2 vCPU</td>
+            <td>4 Go</td>
+            <td>20 Go</td>
+        </tr>
+        <tr>
+            <td>Base de donnees</td>
+            <td>Linux</td>
+            <td>PostgreSQL 15+</td>
+            <td>4 vCPU</td>
+            <td>16 Go</td>
+            <td>100 Go</td>
+        </tr>
+    </table>
+
+    <h3>11.2 Site utilisateur - Poste de travail</h3>
+    <table>
+        <tr>
+            <th>Element</th>
+            <th>Caracteristiques</th>
+        </tr>
+        <tr>
+            <td>Systeme d'exploitation</td>
+            <td>Windows 10+, macOS, Linux, iOS, Android</td>
+        </tr>
+        <tr>
+            <td>Navigateur</td>
+            <td>Chrome 90+, Firefox 90+, Edge 90+, Safari 14+</td>
+        </tr>
+        <tr>
+            <td>RAM</td>
+            <td>4 Go minimum</td>
+        </tr>
+        <tr>
+            <td>Reseau</td>
+            <td>Acces intranet BOA / VPN</td>
+        </tr>
+        <tr>
+            <td>Autres</td>
+            <td>JavaScript active, Cookies actives</td>
+        </tr>
+    </table>
+
+    <!-- 12. Matrice de flux -->
+    <h2>12. MATRICE DE FLUX</h2>
+    <table>
+        <tr>
+            <th>Source</th>
+            <th>Destination</th>
+            <th>Port</th>
+            <th>Protocole</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>Utilisateur</td>
+            <td>Frontend (Nginx)</td>
+            <td>443</td>
+            <td>HTTPS</td>
+            <td>Acces application web</td>
+        </tr>
+        <tr>
+            <td>Frontend</td>
+            <td>Backend API</td>
+            <td>8080</td>
+            <td>HTTPS</td>
+            <td>Appels API REST</td>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>PostgreSQL</td>
+            <td>5432</td>
+            <td>TCP</td>
+            <td>Acces base de donnees</td>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>ASAL</td>
+            <td>443</td>
+            <td>SOAP/HTTPS</td>
+            <td>API annuaire collaborateurs</td>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>Keycloak</td>
+            <td>8443</td>
+            <td>HTTPS</td>
+            <td>Authentification / SSO</td>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>Keycloak</td>
+            <td>8443</td>
+            <td>HTTPS</td>
+            <td>Authentification SSO (plugin socle)</td>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>Kafka</td>
+            <td>9092</td>
+            <td>TCP</td>
+            <td>Messaging / Notifications (socle EAI)</td>
+        </tr>
+    </table>
+
+    <!-- 13. Environnements -->
+    <h2>13. AUTRES ENVIRONNEMENTS</h2>
+
+    <h3>13.1 Developpement</h3>
+    <p>Environnement local des developpeurs avec Docker Compose.</p>
+
+    <h3>13.2 Recette Fonctionnelle</h3>
+    <p>La recette fonctionnelle sera prononcee sur les bases des tests effectues sur la plateforme Cloud de recette.</p>
+    <table>
+        <tr>
+            <th>Application</th>
+            <th>URL (proposition)</th>
+        </tr>
+        <tr>
+            <td>Frontend Terrain</td>
+            <td>www.followup.bmcebank.co.ma</td>
+        </tr>
+        <tr>
+            <td>Frontend Admin</td>
+            <td>www.followup-admin.bmcebank.co.ma</td>
+        </tr>
+        <tr>
+            <td>Backend API</td>
+            <td>www.followup-api.bmcebank.co.ma</td>
+        </tr>
+    </table>
+
+    <h3>13.3 Recette Technique</h3>
+    <p>La recette technique sera prononcee sur les bases des tests de performance et de securite.</p>
+
+    <h3>13.4 Production</h3>
+    <p>Environnement de production heberge dans le <strong>perimetre Cloud BOA</strong>.</p>
+
+    <h3>13.5 Secours (Backup)</h3>
+    <p>Un environnement de secours sera configure conformement au PCI (Plan de Continuite Informatique) Cloud BOA.</p>
+
+    <!-- Footer -->
+    <div style="margin-top: 1cm; padding-top: 0.3cm; border-top: 1px solid #ccc; font-size: 9pt; color: #666; text-align: center;">
+        <p>EAI-DAAT-FollowUp-12032026-V1.0</p>
+        <p>Dossier d'Architecture Applicative et Technique - Projet Follow Up BOA</p>
+        <p>Confidentiel - Bank of Africa</p>
+    </div>
+
+</body>
+</html>

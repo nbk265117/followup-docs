@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadrage Technique - Projet Follow Up BOA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --boa-blue: #003D7C;
+            --boa-light-blue: #4A90E2;
+            --boa-lighter-blue: #E8F1F8;
+            --grey: #64748b;
+            --light-grey: #f1f5f9;
+            --border-grey: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 8px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 12px;
+            line-height: 1.45;
+            color: var(--text-primary);
+            background: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--boa-blue) 0%, var(--boa-light-blue) 100%);
+            color: white;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .header .meta {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .header .date {
+            margin-top: 0.3rem;
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0.75rem auto;
+            padding: 0 0.75rem;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            margin-bottom: 0.6rem;
+            border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-grey);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--boa-blue);
+            color: white;
+            padding: 0.6rem 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header .icon {
+            font-size: 0.95rem;
+        }
+
+        .section-header h2 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .section-content {
+            padding: 0.85rem;
+        }
+
+        .subsection {
+            margin-bottom: 0.85rem;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection h3 {
+            color: var(--boa-blue);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid var(--boa-lighter-blue);
+            font-weight: 600;
+        }
+
+        .subsection h4 {
+            color: var(--boa-light-blue);
+            font-size: 0.8rem;
+            margin: 0.6rem 0 0.3rem 0;
+            font-weight: 600;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0.6rem;
+            font-size: 0.75rem;
+        }
+
+        th {
+            background: var(--boa-blue);
+            color: white;
+            padding: 0.4rem 0.6rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.7rem;
+        }
+
+        td {
+            padding: 0.4rem 0.6rem;
+            border-bottom: 1px solid var(--border-grey);
+        }
+
+        tr:hover {
+            background: var(--light-grey);
+        }
+
+        /* Diagram */
+        .diagram {
+            background: var(--light-grey);
+            border: 1px solid var(--border-grey);
+            border-radius: 5px;
+            padding: 0.6rem;
+            margin: 0.6rem 0;
+            overflow-x: auto;
+        }
+
+        .diagram pre {
+            font-family: 'SF Mono', Consolas, monospace;
+            font-size: 0.6rem;
+            line-height: 1.3;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.5rem;
+            margin: 0.6rem 0;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border-grey);
+            border-radius: 5px;
+            padding: 0.5rem;
+            transition: all 0.15s ease;
+        }
+
+        .card:hover {
+            border-color: var(--boa-light-blue);
+            box-shadow: 0 1px 4px rgba(0,61,124,0.1);
+        }
+
+        .card h4 {
+            color: var(--boa-blue);
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.35;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.45rem;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .badge-primary {
+            background: var(--boa-blue);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .badge-light {
+            background: var(--boa-lighter-blue);
+            color: var(--boa-blue);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 0.5rem 0.6rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            border-left: 3px solid;
+            font-size: 0.7rem;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            color: #b45309;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        li {
+            margin-bottom: 0.2rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        /* Code */
+        code {
+            background: var(--light-grey);
+            padding: 0.12rem 0.35rem;
+            border-radius: 3px;
+            font-family: 'SF Mono', Consolas, monospace;
+            font-size: 0.7rem;
+            color: #e11d48;
+        }
+
+        /* GitFlow Diagram */
+        .gitflow-container {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 5px;
+            padding: 0.85rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+        }
+
+        .gitflow-container pre {
+            font-family: 'SF Mono', Consolas, monospace;
+            font-size: 0.55rem;
+            line-height: 1.25;
+            color: #e2e8f0;
+            margin: 0;
+        }
+
+        .branch-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.6rem;
+            padding-top: 0.6rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .branch-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.6rem;
+            color: #e2e8f0;
+        }
+
+        .branch-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .branch-main { background: #ef4444; }
+        .branch-develop { background: #22c55e; }
+        .branch-feature { background: #3b82f6; }
+        .branch-release { background: #f59e0b; }
+        .branch-hotfix { background: #ec4899; }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.4rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--boa-light-blue);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.25rem;
+            top: 0.2rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--boa-blue);
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px var(--boa-light-blue);
+        }
+
+        .timeline-item h4 {
+            color: var(--boa-blue);
+            font-size: 0.75rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--boa-blue);
+            color: white;
+            text-align: center;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .footer p {
+            margin: 0.15rem 0;
+            font-size: 0.7rem;
+        }
+
+        /* Print Styles */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body {
+                background: white;
+                font-size: 10px;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                margin-bottom: 0.4rem;
+            }
+
+            .header {
+                padding: 0.6rem;
+            }
+
+            .section-content {
+                padding: 0.5rem;
+            }
+
+            .section-header {
+                padding: 0.35rem 0.5rem;
+            }
+
+            .gitflow-container {
+                padding: 0.5rem;
+            }
+
+            .gitflow-container pre {
+                font-size: 0.5rem;
+            }
+
+            table {
+                font-size: 0.65rem;
+            }
+
+            th, td {
+                padding: 0.25rem 0.4rem;
+            }
+
+            .card {
+                padding: 0.35rem;
+            }
+
+            .card h4 {
+                font-size: 0.65rem;
+            }
+
+            .card p {
+                font-size: 0.6rem;
+            }
+
+            .alert {
+                padding: 0.35rem;
+                font-size: 0.6rem;
+            }
+
+            .timeline-item {
+                padding-bottom: 0.5rem;
+            }
+
+            .footer {
+                padding: 0.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>CADRAGE TECHNIQUE</h1>
+        <div class="subtitle">Projet Follow Up BOA - MVP</div>
+        <div class="meta">Eurafric Information - Bank of Africa</div>
+        <div class="date">Mars 2026</div>
+    </div>
+
+    <div class="container">
+
+        <!-- Section 0: Objectifs Sprint 0 -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">0.</span>
+                <h2>OBJECTIFS SPRINT 0</h2>
+            </div>
+            <div class="section-content">
+                <div class="alert alert-info">
+                    <strong>Sprint 0</strong> = Sprint de preparation technique et fonctionnelle avant le demarrage du developpement (Sprint 1).
+                </div>
+
+                <div class="subsection">
+                    <h3>Objectifs principaux</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Objectif</th>
+                                <th>Livrable</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Setup technique</strong></td>
+                                <td>Repos GitLab, structure projets, CI/CD</td>
+                                <td><span class="badge badge-success">Fait</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Documentation architecture</strong></td>
+                                <td>Document cadrage technique (ce document)</td>
+                                <td><span class="badge badge-success">Fait</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Acces systemes externes</strong></td>
+                                <td>API ASAL (SOAP), env recette fonctionnel</td>
+                                <td><span class="badge badge-success">Validé</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Validation fonctionnelle</strong></td>
+                                <td>Roles, regles de gestion, matrices habilitation</td>
+                                <td><span class="badge badge-warning">En attente metier</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>Cadrage Scrum</strong></td>
+                                <td>Ceremonies, DoR, DoD, velocite</td>
+                                <td><span class="badge badge-success">Fait</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>Backlog Sprint 1</strong></td>
+                                <td>User Stories estimees et priorisees</td>
+                                <td><span class="badge badge-light">A faire</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Criteres de sortie Sprint 0</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>Technique</h4>
+                            <p>Repos crees, environnement local fonctionnel, pipeline CI/CD operationnel</p>
+                        </div>
+                        <div class="card">
+                            <h4>Documentation</h4>
+                            <p>Architecture validee, conventions definies, README par repo</p>
+                        </div>
+                        <div class="card">
+                            <h4>Fonctionnel</h4>
+                            <p>Roles MVP valides, regles de gestion confirmees par le metier</p>
+                        </div>
+                        <div class="card">
+                            <h4>Backlog</h4>
+                            <p>US Sprint 1 redigees, estimees et "Ready"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Vue d'ensemble -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">1.</span>
+                <h2>ARCHITECTURE TECHNIQUE</h2>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Vue d'ensemble</h3>
+                    <p>Architecture monolithique modulaire avec 1 Backend API et 2 Frontends separés.</p>
+
+                    <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              UTILISATEURS                                    │
+│                                                                              │
+│     Animateurs, Directeurs, Managers          Administrateurs               │
+│              │                                      │                        │
+└──────────────┼──────────────────────────────────────┼────────────────────────┘
+               │                                      │
+               ▼                                      ▼
+┌──────────────────────────────┐    ┌──────────────────────────────────────────┐
+│     FOLLOWUP-CLIENT          │    │     FOLLOWUP-ADMIN                       │
+│     (Application Terrain)    │    │     (Application Backoffice)             │
+│     Microfrontend Angular    │    │     Microfrontend Angular                │
+│                              │    │                                          │
+│     • Angular 15 + TS        │    │     • Angular 15 + TypeScript            │
+│     • Single-SPA (MF)        │    │     • Single-SPA (MF)                    │
+│     • eai-lib-material       │    │     • eai-lib-material                   │
+│     • @ngx-translate         │    │     • @ngx-translate (i18n)              │
+│                              │    │                                          │
+│     URL: www.followup        │    │     URL: www.followup-admin              │
+│          .bmcebank.co.ma     │    │          .bmcebank.co.ma                 │
+└──────────────┬───────────────┘    └──────────────────┬───────────────────────┘
+               │                                       │
+               └───────────────┬───────────────────────┘
+                               │
+                               ▼  REST API (JSON + JWT)
+               ┌───────────────────────────────────────┐
+               │         FOLLOWUP-SERVEUR              │
+               │         (Backend API - Hexagonal)     │
+               │                                       │
+               │         • Socle EAI (msiboa-api)      │
+               │         • Spring Boot + Java 17       │
+               │         • Architecture Hexagonale     │
+               │         • Kafka (Messaging)           │
+               │         • Keycloak (Auth)             │
+               │                                       │
+               │         URL: www.followup-api         │
+               │              .bmcebank.co.ma          │
+               └───────────────┬───────────────────────┘
+                               │
+               ┌───────────────┴───────────────────────┐
+               │                                       │
+               ▼                                       ▼
+┌──────────────────────────┐         ┌─────────────────────────────────────────┐
+│     PostgreSQL 15        │         │       SERVICES EXTERNES                 │
+│                          │         │                                         │
+│   • Données métier       │         │   • ASAL (Annuaire collaborateurs)      │
+│   • Utilisateurs         │         │   • Keycloak (Authentification)         │
+│   • Audit logs           │         │   • LDAP/AD (SSO)                       │
+│                          │         │   • Kafka (Messaging)                   │
+└──────────────────────────┘         └─────────────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Stack Technique -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">2.</span>
+                <h2>STACK TECHNIQUE</h2>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Backend - msiboa-oc-api-followup-serveur (Architecture Hexagonale)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Composant</th>
+                                <th>Technologie</th>
+                                <th>Version</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Socle Parent</strong></td>
+                                <td>msiboa-api-parent (EAI)</td>
+                                <td>2.0.10</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Framework</strong></td>
+                                <td>Spring Boot</td>
+                                <td>3.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Langage</strong></td>
+                                <td>Java</td>
+                                <td>17 (LTS)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Architecture</strong></td>
+                                <td>Hexagonale (Ports & Adapters)</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Authentification</strong></td>
+                                <td>Keycloak + LDAP</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Messaging</strong></td>
+                                <td>Apache Kafka</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Base de données</strong></td>
+                                <td>PostgreSQL</td>
+                                <td>15+</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Build</strong></td>
+                                <td>Maven (Multi-modules)</td>
+                                <td>3.9.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tests</strong></td>
+                                <td>JUnit 5 + Mockito</td>
+                                <td>5.x</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Structure multi-modules</h4>
+                    <div class="alert alert-info">
+                        <code>followup-serveur-domain</code> - Logique métier (domain-core + application-service)<br>
+                        <code>followup-serveur-application</code> - Controllers REST<br>
+                        <code>followup-serveur-dataaccess</code> - Repositories JPA<br>
+                        <code>followup-serveur-messaging</code> - Kafka producers/consumers<br>
+                        <code>followup-serveur-infrastructure</code> - Intégrations externes (ASAL, LDAP)<br>
+                        <code>followup-serveur-container</code> - Module de démarrage Spring Boot
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Frontend - msiboa-cc-mf-followup-client & msiboa-cc-mf-followup-admin (Microfrontend Angular)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Composant</th>
+                                <th>Technologie</th>
+                                <th>Version</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Framework</strong></td>
+                                <td>Angular</td>
+                                <td>15.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Langage</strong></td>
+                                <td>TypeScript</td>
+                                <td>4.9.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Architecture</strong></td>
+                                <td>Single-SPA (Microfrontend)</td>
+                                <td>8.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>UI Components</strong></td>
+                                <td>eai-lib-material (Socle EAI)</td>
+                                <td>0.2.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Internationalisation</strong></td>
+                                <td>@ngx-translate</td>
+                                <td>14.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>State Management</strong></td>
+                                <td>RxJS + Services</td>
+                                <td>7.8.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HTTP Client</strong></td>
+                                <td>Angular HttpClient</td>
+                                <td>Built-in</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Excel Export</strong></td>
+                                <td>xlsx</td>
+                                <td>0.18.x</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tests</strong></td>
+                                <td>Jasmine + Karma</td>
+                                <td>4.x / 6.x</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Infrastructure & DevOps</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>Conteneurisation</h4>
+                            <p>Docker + Docker Compose</p>
+                        </div>
+                        <div class="card">
+                            <h4>Reverse Proxy</h4>
+                            <p>Nginx (SSL, Load Balancer)</p>
+                        </div>
+                        <div class="card">
+                            <h4>CI/CD</h4>
+                            <p>GitLab CI/CD</p>
+                        </div>
+                        <div class="card">
+                            <h4>Versioning</h4>
+                            <p>Git + GitLab</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Repositories GitLab -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">3.</span>
+                <h2>REPOSITORIES GITLAB</h2>
+            </div>
+            <div class="section-content">
+                <div class="alert alert-info">
+                    <strong>Note :</strong> Les URLs de recette sont des propositions, a valider avec l'equipe Infra.
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Repository GitLab</th>
+                            <th>URL Recette (proposition)</th>
+                            <th>Port</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Backend API</strong></td>
+                            <td><code>msiboa-oc-api-followup-serveur</code></td>
+                            <td><em>www.followup-api.bmcebank.co.ma</em></td>
+                            <td>8080</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Frontend Terrain</strong></td>
+                            <td><code>msiboa-cc-mf-followup-client</code></td>
+                            <td><em>www.followup.bmcebank.co.ma</em></td>
+                            <td>9080</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Frontend Admin</strong></td>
+                            <td><code>msiboa-cc-mf-followup-admin</code></td>
+                            <td><em>www.followup-admin.bmcebank.co.ma</em></td>
+                            <td>9081</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 4: GitFlow -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">4.</span>
+                <h2>STRATEGIE DE BRANCHING - GITFLOW</h2>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Diagramme GitFlow</h3>
+                    <div class="gitflow-container">
+<pre>
+    main (production)
+      │
+      │◄──────────────────────────────────────────────────────────────── v1.0.0 (tag)
+      │                                                                      ▲
+      │                                                                      │
+      │    hotfix/fix-critical-bug ─────────────────────────────────────────►│
+      │         │                                                            │
+      │         │◄─── Création depuis main                                   │
+      │         │     Merge vers main ET develop                             │
+      │                                                                      │
+      │◄─────────────────────────────────────────────────────────────────────┤
+      │                                                                      │
+      │                          release/v1.0.0 ────────────────────────────►│
+      │                               │                                      │
+      │                               │◄─── Création depuis develop          │
+      │                               │     Tests finaux, bugfixes           │
+      │                               │     Merge vers main ET develop       │
+      │                                                                      │
+      │                                                                      │
+    develop ◄────────────────────────────────────────────────────────────────┤
+      │                                                                      │
+      │◄─── feat/FUP-123-user-auth ────────────────────────────────────────────┤
+      │         │                                                            │
+      │         │◄─── Création depuis develop                                │
+      │         │     Merge Request vers develop                             │
+      │                                                                      │
+      │◄─── feat/FUP-124-eval-form ──────────────────────────────────────────┤
+      │         │                                                            │
+      │         │◄─── Création depuis develop                                │
+      │         │     Merge Request vers develop                             │
+      │                                                                      │
+      ▼                                                                      │
+    (continue...)                                                            │
+</pre>
+                        <div class="branch-legend">
+                            <div class="branch-item">
+                                <div class="branch-dot branch-main"></div>
+                                <span>main (production)</span>
+                            </div>
+                            <div class="branch-item">
+                                <div class="branch-dot branch-develop"></div>
+                                <span>develop (integration)</span>
+                            </div>
+                            <div class="branch-item">
+                                <div class="branch-dot branch-feature"></div>
+                                <span>feat/* (fonctionnalites)</span>
+                            </div>
+                            <div class="branch-item">
+                                <div class="branch-dot branch-release"></div>
+                                <span>release/* (pre-production)</span>
+                            </div>
+                            <div class="branch-item">
+                                <div class="branch-dot branch-hotfix"></div>
+                                <span>hotfix/* (corrections urgentes)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Description des branches</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Branche</th>
+                                <th>Description</th>
+                                <th>Crée depuis</th>
+                                <th>Merge vers</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-primary">main</span></td>
+                                <td>Code en production, stable, tague</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-success">develop</span></td>
+                                <td>Branche d'integration, dernières fonctionnalites</td>
+                                <td>main</td>
+                                <td>release/*</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-light">feat/*</span></td>
+                                <td>Developpement d'une fonctionnalite</td>
+                                <td>develop</td>
+                                <td>develop</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-warning">release/*</span></td>
+                                <td>Preparation d'une release (tests finaux)</td>
+                                <td>develop</td>
+                                <td>main + develop</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge" style="background:#ec4899;color:white;">hotfix/*</span></td>
+                                <td>Correction urgente en production</td>
+                                <td>main</td>
+                                <td>main + develop</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge" style="background:#6366f1;color:white;">tag vX.Y.Z</span></td>
+                                <td>Version taguee pour release en production</td>
+                                <td>main</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Regles de nommage</h3>
+                    <div class="alert alert-info">
+                        <strong>Convention de nommage des branches :</strong><br><br>
+                        <code>feat/[JIRA-ID]-description-courte</code><br>
+                        <code>bugfix/[JIRA-ID]-description-courte</code><br>
+                        <code>hotfix/[JIRA-ID]-description-courte</code><br>
+                        <code>release/v1.0.0</code><br>
+                        <code>tag: v1.0.0</code> (sur main apres merge release)<br><br>
+                        <strong>Exemples :</strong><br>
+                        <code>feat/FUP-123-user-auth</code><br>
+                        <code>feat/FUP-124-eval-form</code><br>
+                        <code>bugfix/FUP-125-login-error</code><br>
+                        <code>hotfix/FUP-126-security-fix</code><br>
+                        <code>tag: v1.0.0, v1.0.1, v1.1.0</code>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Workflow de developpement</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>1. Creer une branche feat</h4>
+                            <p><code>git checkout develop && git pull && git checkout -b feat/FUP-XXX-ma-feature</code></p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2. Developper et commiter</h4>
+                            <p>Commits atomiques avec messages clairs. Format: <code>[FUP-XXX] Description du changement</code></p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>3. Pousser et creer une Merge Request</h4>
+                            <p><code>git push -u origin feat/FUP-XXX-ma-feature</code> → Creer MR vers develop</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>4. Code Review</h4>
+                            <p>Review obligatoire par au moins 1 developpeur (Tech Lead ou Senior Dev)</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>5. Merge vers develop</h4>
+                            <p>Apres approbation, merge de la MR. La branche feat est supprimee.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Environnements -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">5.</span>
+                <h2>ENVIRONNEMENTS</h2>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Environnement</th>
+                            <th>Branche source</th>
+                            <th>Usage</th>
+                            <th>Deploiement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge badge-light">Local</span></td>
+                            <td>feat/*</td>
+                            <td>Developpement local</td>
+                            <td>Manuel (Docker Compose)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-success">Dev</span></td>
+                            <td>develop</td>
+                            <td>Integration continue, tests equipe</td>
+                            <td>Automatique (CI/CD)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-warning">Recette</span></td>
+                            <td>release/*</td>
+                            <td>Tests fonctionnels, validation PO</td>
+                            <td>Automatique (CI/CD)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-primary">Production</span></td>
+                            <td>main</td>
+                            <td>Environnement live</td>
+                            <td>Manuel (avec validation)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 6: Documentation -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">6.</span>
+                <h2>DOCUMENTATION</h2>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Types de documentation</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Format</th>
+                                <th>Emplacement</th>
+                                <th>Responsable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Architecture technique</strong></td>
+                                <td>HTML/PDF</td>
+                                <td><code>/docs/index.html</code></td>
+                                <td>Tech Lead</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Documentation API</strong></td>
+                                <td>Swagger/OpenAPI</td>
+                                <td><code>/swagger-ui.html</code></td>
+                                <td>Backend Team</td>
+                            </tr>
+                            <tr>
+                                <td><strong>README projet</strong></td>
+                                <td>Markdown</td>
+                                <td><code>README.md</code> (chaque repo)</td>
+                                <td>Tech Lead</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Changelog</strong></td>
+                                <td>Markdown</td>
+                                <td><code>CHANGELOG.md</code></td>
+                                <td>Equipe Dev</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Specs fonctionnelles</strong></td>
+                                <td>Confluence/Word</td>
+                                <td>Confluence BOA</td>
+                                <td>Product Owner</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Postman Collections</strong></td>
+                                <td>JSON</td>
+                                <td><code>/docs/postman/</code></td>
+                                <td>Backend Team</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Maquettes UI/UX</strong></td>
+                                <td>Figma</td>
+                                <td><a href="https://www.figma.com/design/egjSewQnUHxSSyUZimkDD4/BOA-Follow-Up?node-id=170-2485" target="_blank">BOA-Follow-Up (Figma)</a></td>
+                                <td>Youssef Barouch</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Contenu du README.md</h3>
+                    <div class="alert alert-info">
+                        Chaque repository doit contenir un README.md avec :<br><br>
+                        <strong>1. Description du projet</strong> - Objectif et contexte<br>
+                        <strong>2. Prerequisites</strong> - Logiciels et versions requises<br>
+                        <strong>3. Installation</strong> - Etapes pour configurer le projet<br>
+                        <strong>4. Configuration</strong> - Variables d'environnement, fichiers de config<br>
+                        <strong>5. Lancement</strong> - Commandes pour demarrer l'application<br>
+                        <strong>6. Tests</strong> - Comment lancer les tests<br>
+                        <strong>7. Deploiement</strong> - Instructions de deploiement<br>
+                        <strong>8. Contribuer</strong> - Guide de contribution (GitFlow, conventions)
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Documentation API (Swagger)</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>Swagger UI</h4>
+                            <p>Interface interactive pour tester l'API directement depuis le navigateur</p>
+                        </div>
+                        <div class="card">
+                            <h4>OpenAPI 3.0</h4>
+                            <p>Specification standard, exportable en JSON/YAML</p>
+                        </div>
+                        <div class="card">
+                            <h4>Annotations</h4>
+                            <p>Documentation inline dans le code Java via annotations SpringDoc</p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success">
+                        <strong>URL Swagger (Recette) :</strong><br>
+                        <code>https://www.followup-api.bmcebank.co.ma/swagger-ui.html</code>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Livrables documentaires Sprint 0</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>Architecture technique</h4>
+                            <p>Document decrivant l'architecture globale, les choix techniques et les patterns utilises</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>README.md par repository</h4>
+                            <p>Guide de demarrage rapide pour chaque projet</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Guide de contribution</h4>
+                            <p>GitFlow, conventions de code, process de code review</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Schema base de donnees</h4>
+                            <p>Modele de donnees initial avec relations et contraintes</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Postman Collection</h4>
+                            <p>Collection initiale avec authentification et premiers endpoints</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Conventions -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">7.</span>
+                <h2>CONVENTIONS DE CODE</h2>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Backend (Java/Spring)</h3>
+                    <ul>
+                        <li><strong>Style Guide :</strong> Google Java Style Guide</li>
+                        <li><strong>Linter :</strong> Checkstyle</li>
+                        <li><strong>Nommage classes :</strong> PascalCase (UserService, EvaluationController)</li>
+                        <li><strong>Nommage methodes :</strong> camelCase (getUserById, createEvaluation)</li>
+                        <li><strong>Packages :</strong> com.boa.followup.[module]</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>Frontend (Angular/TypeScript)</h3>
+                    <ul>
+                        <li><strong>Style Guide :</strong> Angular Style Guide (officiel)</li>
+                        <li><strong>Linter :</strong> ESLint + Angular ESLint</li>
+                        <li><strong>Composants :</strong> PascalCase (UserCardComponent, EvaluationFormComponent)</li>
+                        <li><strong>Services :</strong> PascalCase avec suffix "Service" (AuthService, EvaluationService)</li>
+                        <li><strong>Fichiers :</strong> kebab-case (user-card.component.ts, evaluation.service.ts)</li>
+                        <li><strong>Modules :</strong> Feature modules (UserModule, EvaluationModule)</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>Messages de commit</h3>
+                    <div class="alert alert-info">
+                        <strong>Format :</strong> <code>[TYPE] Description courte</code><br><br>
+                        <strong>Types :</strong><br>
+                        <code>feat:</code> Nouvelle fonctionnalite<br>
+                        <code>fix:</code> Correction de bug<br>
+                        <code>docs:</code> Documentation<br>
+                        <code>style:</code> Formatage (pas de changement de code)<br>
+                        <code>refactor:</code> Refactoring<br>
+                        <code>test:</code> Ajout/modification de tests<br>
+                        <code>chore:</code> Maintenance (deps, config)<br><br>
+                        <strong>Exemple :</strong> <code>feat: add user authentication with JWT</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Roles et Utilisateurs -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">8.</span>
+                <h2>ROLES & UTILISATEURS MVP</h2>
+            </div>
+            <div class="section-content">
+                <div class="alert alert-warning">
+                    <strong>Statut : En attente de validation metier</strong><br>
+                    Les elements ci-dessous sont en cours de validation par l'equipe metier (Amine KHEDIDJ & Houssam Bouzarzar).
+                    La confirmation est requise avant le demarrage du Sprint 1.
+                </div>
+
+                <div class="subsection">
+                    <h3>Marches couverts</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>Particuliers (Agence)</h4>
+                            <p>Reseau d'agences bancaires pour les clients particuliers</p>
+                        </div>
+                        <div class="card">
+                            <h4>Entreprises (CAF)</h4>
+                            <p>Centres d'Affaires pour les clients entreprises</p>
+                        </div>
+                        <div class="card">
+                            <h4>Multi-marches (CEMM)</h4>
+                            <p>Centres d'Excellence Multi-Marches</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Roles Observateurs (qui saisissent les observations)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Marche</th>
+                                <th>Perimetre d'observation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Directeur d'agence (DA)</strong></td>
+                                <td>Particuliers</td>
+                                <td>Collaborateurs de son agence</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Directeur de groupe</strong></td>
+                                <td>Particuliers</td>
+                                <td>DA des agences de son groupe</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RCP</strong></td>
+                                <td>Particuliers</td>
+                                <td>Conseillers de son agence</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Directeur CAF</strong></td>
+                                <td>Entreprises</td>
+                                <td>Collaborateurs de son CAF</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RCE</strong></td>
+                                <td>Entreprises</td>
+                                <td>Collaborateurs de son CAF</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Directeur CEMM</strong></td>
+                                <td>Multi-marches</td>
+                                <td>Tous les collaborateurs de son CEMM</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Animateur</strong></td>
+                                <td>Tous</td>
+                                <td>Selon sa region d'affectation</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Roles Observes (qui sont evalues)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Marche</th>
+                                <th>Modele d'observation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>CAC</strong> (Charge d'Accueil Client)</td>
+                                <td>Particuliers / CEMM</td>
+                                <td>Observation CAC</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conseiller PRO</strong></td>
+                                <td>Particuliers / CEMM</td>
+                                <td>Observation Conseiller PRO</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conseiller Premium</strong></td>
+                                <td>Particuliers / CEMM</td>
+                                <td>Observation Conseiller Premium</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conseiller IGP</strong></td>
+                                <td>Particuliers / CEMM</td>
+                                <td>Observation Conseiller IGP</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gestionnaire d'entreprise</strong></td>
+                                <td>Entreprises / CEMM</td>
+                                <td>Observation Gestionnaire</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Charge d'affaires</strong></td>
+                                <td>Entreprises / CEMM</td>
+                                <td>Observation Charge d'affaires</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cash & Trade Specialist</strong></td>
+                                <td>Entreprises / CEMM</td>
+                                <td>Observation Cash & Trade</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Elements en attente de validation</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Element</th>
+                                <th>Description</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Liste des profils MVP</strong></td>
+                                <td>Validation finale des roles utilisateurs</td>
+                                <td><span class="badge badge-warning">En attente</span></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Regles de saisie</strong></td>
+                                <td>Qui peut saisir une observation pour qui</td>
+                                <td><span class="badge badge-warning">En attente</span></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Regles de consultation</strong></td>
+                                <td>Qui peut consulter l'historique de qui</td>
+                                <td><span class="badge badge-warning">En attente</span></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Volumetrie</strong></td>
+                                <td>Nombre d'observations par an (dimensionnement)</td>
+                                <td><span class="badge badge-warning">En attente</span></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>Historique si changement</strong></td>
+                                <td>Regle en cas de changement d'affectation</td>
+                                <td><span class="badge badge-warning">En attente</span></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>Affectation animateurs</strong></td>
+                                <td>Regles d'affectation aux perimetres</td>
+                                <td><span class="badge badge-warning">En attente</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Dependances externes -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">9.</span>
+                <h2>DEPENDANCES EXTERNES</h2>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Systeme</th>
+                            <th>Usage</th>
+                            <th>Responsable</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ASAL</strong></td>
+                            <td>Annuaire collaborateurs SOAP (accesseur-asal)</td>
+                            <td>Badr MERZAQ</td>
+                            <td><span class="badge badge-success">Validé - Recette OK</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Keycloak</strong></td>
+                            <td>Authentification SSO</td>
+                            <td>Plugin socle pré-intégré</td>
+                            <td><span class="badge badge-success">Intégré au socle</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kafka Messaging</strong></td>
+                            <td>Notifications via Kafka Producers</td>
+                            <td>Equipe Dev</td>
+                            <td><span class="badge badge-success">Intégré au socle</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="subsection">
+                    <h3>Integration ASAL - Details techniques</h3>
+                    <div class="alert alert-success">
+                        <strong>Statut : Environnement recette fonctionnel</strong><br>
+                        Contact : Badr MERZAQ | Documentation reçue et validée
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Recherche par code SAS</td>
+                                <td><code>RechSalCodeSasUC</code></td>
+                                <td>Récupère infos collaborateur par code SAS</td>
+                                <td>Unitaire</td>
+                            </tr>
+                            <tr>
+                                <td>Recherche par matricule</td>
+                                <td><code>RechSalMatUC</code></td>
+                                <td>Récupère infos collaborateur par matricule</td>
+                                <td>Unitaire</td>
+                            </tr>
+                            <tr>
+                                <td>Responsable guichet</td>
+                                <td><code>RechRespGuiUC</code></td>
+                                <td>Récupère le responsable d'un guichet</td>
+                                <td>Unitaire</td>
+                            </tr>
+                            <tr>
+                                <td>Responsable N+1 guichet</td>
+                                <td><code>RechRespSupGuiUC</code></td>
+                                <td>Récupère le responsable N+1 d'un guichet</td>
+                                <td>Unitaire</td>
+                            </tr>
+                            <tr>
+                                <td>Salariés d'un guichet</td>
+                                <td><code>RechListSalGuiUC</code></td>
+                                <td>Liste des salariés d'un guichet</td>
+                                <td>Liste</td>
+                            </tr>
+                            <tr>
+                                <td>Salariés d'un établissement</td>
+                                <td><code>RechListSalEtbUC</code></td>
+                                <td>Liste des salariés d'un établissement</td>
+                                <td>Liste</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Protocole :</strong> SOAP | <strong>Alias UDDI :</strong> accesseur-asal | <strong>Codes test :</strong> GRCTST01 → GRCTST10</p>
+
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Prérequis pour tester ASAL :</strong><br>
+                        Demander l'ouverture réseau vers :<br><br>
+                        <strong>URL :</strong> <code>https://vip-proxy-webfarm-dy.eurafric.com/flux/home.jsp</code><br>
+                        <strong>IP :</strong> <code>10.241.184.110</code><br>
+                        <strong>Port :</strong> <code>443</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Equipe -->
+        <div class="section">
+            <div class="section-header">
+                <span class="icon">10.</span>
+                <h2>EQUIPE PROJET</h2>
+            </div>
+            <div class="section-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Role</th>
+                            <th>Responsabilites</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ayoub YOUB</strong></td>
+                            <td>Tech Lead</td>
+                            <td>Architecture, code review, decisions techniques, coordination equipe</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nizar ZIZOUNE</strong></td>
+                            <td>Senior Dev Fullstack</td>
+                            <td>Developpement backend et frontend</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Salah ELAMRI</strong></td>
+                            <td>Senior Dev Fullstack</td>
+                            <td>Developpement backend et frontend</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Salwa NANA</strong></td>
+                            <td>Product Owner</td>
+                            <td>Backlog, priorisation, validation fonctionnelle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zakaria HAMMOUDI</strong></td>
+                            <td>Scrum Master</td>
+                            <td>Ceremonies Scrum, facilitation, blocages</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p><strong>Bank of Africa - Document Confidentiel</strong></p>
+        <p>Cadrage Technique - Projet Follow Up BOA</p>
+        <p>Version MVP - Mars 2026</p>
+    </div>
+
+</body>
+</html>

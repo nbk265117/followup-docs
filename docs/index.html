@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture Technique - BOA Follow Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --boa-blue: #003D7C;
+            --boa-light-blue: #4A90E2;
+            --boa-lighter-blue: #E8F1F8;
+            --grey: #64748b;
+            --light-grey: #f1f5f9;
+            --border-grey: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --radius: 6px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--boa-blue) 0%, var(--boa-light-blue) 100%);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .header .subtitle {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .header .meta {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            border-bottom: 1px solid var(--border-grey);
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0.35rem 0.5rem;
+            gap: 0.15rem;
+        }
+
+        .nav li {
+            margin: 0;
+        }
+
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            display: block;
+            border-radius: var(--radius);
+            transition: all 0.15s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .nav a:hover {
+            background: var(--boa-lighter-blue);
+            color: var(--boa-blue);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 1rem auto;
+            padding: 0 0.75rem;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            margin-bottom: 0.75rem;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-grey);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--boa-blue);
+            color: white;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .section-header h2 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .section-header .toggle {
+            font-size: 0.85rem;
+            transition: transform 0.2s;
+            opacity: 0.8;
+        }
+
+        .section-header.collapsed .toggle {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: 1rem;
+            max-height: 10000px;
+            overflow: hidden;
+            transition: max-height 0.2s ease;
+        }
+
+        .section-content.collapsed {
+            max-height: 0;
+            padding: 0 1rem;
+        }
+
+        .subsection {
+            margin-bottom: 1rem;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection h3 {
+            color: var(--boa-blue);
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 2px solid var(--boa-lighter-blue);
+            font-weight: 600;
+        }
+
+        .subsection h4 {
+            color: var(--boa-light-blue);
+            font-size: 0.8rem;
+            margin: 0.75rem 0 0.4rem 0;
+            font-weight: 600;
+        }
+
+        /* Text */
+        p {
+            margin-bottom: 0.6rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        ul, ol {
+            margin-left: 1.25rem;
+            margin-bottom: 0.6rem;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--boa-blue);
+            font-weight: 600;
+        }
+
+        code {
+            background: var(--light-grey);
+            padding: 0.15rem 0.35rem;
+            border-radius: 4px;
+            font-family: 'SF Mono', Consolas, monospace;
+            font-size: 0.8em;
+            color: #e11d48;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0.75rem;
+            background: white;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--boa-blue);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border-grey);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--light-grey);
+        }
+
+        /* File tree */
+        .file-tree {
+            background: var(--light-grey);
+            border-left: 3px solid var(--boa-blue);
+            padding: 0.6rem 0.75rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-family: 'SF Mono', Consolas, monospace;
+        }
+
+        .file-tree-item {
+            padding: 0.15rem 0;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .file-tree-item.folder {
+            font-weight: 600;
+            color: var(--boa-blue);
+        }
+
+        .file-tree-item.file {
+            color: var(--text-secondary);
+        }
+
+        .file-tree-item .icon {
+            margin-right: 0.35rem;
+            display: inline-block;
+            width: 0.9rem;
+            font-size: 0.85rem;
+        }
+
+        .file-tree-item .indent {
+            display: inline-block;
+            width: 1rem;
+        }
+
+        .file-tree-item .comment {
+            color: var(--grey);
+            margin-left: 0.5rem;
+            font-style: italic;
+            font-size: 0.7rem;
+        }
+
+        /* Diagram */
+        .diagram {
+            background: white;
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            overflow-x: auto;
+        }
+
+        .diagram pre {
+            font-family: 'SF Mono', Consolas, monospace;
+            font-size: 0.65rem;
+            line-height: 1.35;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius);
+            padding: 0.75rem;
+            transition: all 0.15s ease;
+        }
+
+        .card:hover {
+            border-color: var(--boa-light-blue);
+            box-shadow: 0 2px 8px rgba(0,61,124,0.1);
+        }
+
+        .card h4 {
+            color: var(--boa-blue);
+            margin-bottom: 0.35rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 0.75rem;
+            text-align: left;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.35rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .badge-primary {
+            background: var(--boa-blue);
+            color: white;
+        }
+
+        .badge-secondary {
+            background: var(--boa-light-blue);
+            color: white;
+        }
+
+        .badge-light {
+            background: var(--boa-lighter-blue);
+            color: var(--boa-blue);
+        }
+
+        .badge-success {
+            background: #10b981;
+            color: white;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 0.6rem 0.85rem;
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            border-left: 3px solid;
+            font-size: 0.8rem;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            color: #b45309;
+        }
+
+        /* Two columns layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--boa-blue);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+        }
+
+        .footer p {
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+
+            .nav ul {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav li {
+                margin: 0.15rem 0;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .section-content {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body {
+                font-size: 11px;
+                background: white;
+                color: #000;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .header {
+                position: relative;
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+                page-break-after: avoid;
+            }
+
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0 0.5rem;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-header {
+                background: var(--boa-blue) !important;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .section-header h2 {
+                font-size: 0.85rem;
+            }
+
+            .section-content {
+                padding: 0.75rem;
+            }
+
+            .section-content.collapsed {
+                max-height: none !important;
+                padding: 0.75rem !important;
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
+            }
+
+            .card {
+                padding: 0.5rem;
+                page-break-inside: avoid;
+            }
+
+            .card h4 {
+                font-size: 0.7rem;
+            }
+
+            .card p {
+                font-size: 0.65rem;
+            }
+
+            .alert {
+                padding: 0.4rem 0.6rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .diagram {
+                padding: 0.5rem;
+                page-break-inside: avoid;
+            }
+
+            .diagram pre {
+                font-size: 0.55rem;
+            }
+
+            table {
+                font-size: 0.7rem;
+            }
+
+            th, td {
+                padding: 0.3rem 0.5rem;
+            }
+
+            .file-tree {
+                padding: 0.4rem;
+                font-size: 0.65rem;
+            }
+
+            .file-tree-item {
+                padding: 0.1rem 0;
+            }
+
+            .footer {
+                padding: 0.75rem;
+                margin-top: 1rem;
+                page-break-before: avoid;
+            }
+
+            .subsection {
+                margin-bottom: 0.6rem;
+            }
+
+            .subsection h3 {
+                font-size: 0.8rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .subsection h4 {
+                font-size: 0.7rem;
+                margin: 0.5rem 0 0.3rem 0;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+
+            .toggle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>ARCHITECTURE TECHNIQUE FOLLOWUP</h1>
+        <div class="subtitle">Projet BOA Follow Up - Suivi des Pratiques Commerciales & Managériales</div>
+        <div class="meta">
+            Eurafric BMCE - Bank of Africa
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <ul>
+            <li><a href="#vue-ensemble">Vue d'ensemble</a></li>
+            <li><a href="#architecture-globale">Architecture Globale</a></li>
+            <li><a href="#projets-gitlab">Projets GitLab</a></li>
+            <li><a href="#backend">Backend</a></li>
+            <li><a href="#frontend-followup">Frontend Follow Up</a></li>
+            <li><a href="#frontend-backoffice">Frontend Backoffice</a></li>
+            <li><a href="#database">Base de données</a></li>
+            <li><a href="#asal">Intégration ASAL</a></li>
+            <li><a href="#deploiement">Déploiement</a></li>
+            <li><a href="#cicd">CI/CD</a></li>
+            <li><a href="#implementation">Implémentation</a></li>
+            <li><a href="#tests">Tests</a></li>
+            <li><a href="#performance">Performance</a></li>
+            <li><a href="#design-system">Design System</a></li>
+            <li><a href="#documentation">Documentation API</a></li>
+            <li><a href="#stack">Stack Technique</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- Section 1: Vue d'ensemble -->
+        <div class="section" id="vue-ensemble">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>1. VUE D'ENSEMBLE DU PROJET</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>1.1 Contexte</h3>
+                    <p>
+                        Le projet BOA Follow Up vise à digitaliser et moderniser le processus de suivi et de pilotage
+                        des pratiques commerciales et managériales du réseau Bank of Africa. Cette solution remplacera
+                        l'outil Appsheet actuel par <strong>deux applications web progressives (PWA)</strong> modernes,
+                        performantes et sécurisées.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.2 Architecture Applicative</h3>
+                    <div class="alert alert-info">
+                        <strong>Architecture à 3 Applications :</strong><br><br>
+                        <strong>1 Backend API</strong> : Spring Boot (API REST commune)<br>
+                        &nbsp;&nbsp;→ <code>msiboa-oc-api-followup-serveur</code> (GitLab)<br>
+                        &nbsp;&nbsp;→ Recette : <a href="https://www.followup-api.bmcebank.co.ma" target="_blank">https://www.followup-api.bmcebank.co.ma</a><br><br>
+
+                        <strong>2 Frontends séparés</strong> :<br>
+                        &nbsp;&nbsp;• <strong>Follow Up</strong> : Application terrain pour les évaluations<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;→ <code>msiboa-cc-mf-followup-client</code> (GitLab)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;→ Recette : <a href="https://www.followup.bmcebank.co.ma" target="_blank">https://www.followup.bmcebank.co.ma</a><br><br>
+
+                        &nbsp;&nbsp;• <strong>Backoffice</strong> : Application admin pour la gestion<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;→ <code>msiboa-cc-mf-followup-admin</code> (GitLab)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;→ Recette : <a href="https://www.followup-admin.bmcebank.co.ma" target="_blank">https://www.followup-admin.bmcebank.co.ma</a>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.3 Objectifs Stratégiques</h3>
+                    <ul>
+                        <li>Digitaliser le processus d'évaluation des pratiques commerciales et managériales</li>
+                        <li>Fournir une interface moderne et intuitive accessible sur tous supports (desktop, mobile, tablette)</li>
+                        <li>Permettre la saisie d'observations terrain avec cache navigateur</li>
+                        <li>Assurer la traçabilité complète de toutes les actions via des audit logs détaillés</li>
+                        <li>S'intégrer avec le système d'information BOA (SSO Keycloak, ASAL pour annuaire collaborateurs)</li>
+                        <li>Garantir un haut niveau de sécurité conforme aux standards bancaires</li>
+                        <li>Faciliter le pilotage et l'analyse des données par le management</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.4 Périmètre Fonctionnel par Application</h3>
+
+                    <h4>📱 Application Follow Up (Terrain)</h4>
+                    <ul>
+                        <li><strong>Évaluations :</strong> Saisie observations, soumission, consultation historique</li>
+                        <li><strong>Formulaires :</strong> Consultation des modèles d'évaluation assignés</li>
+                        <li><strong>Dashboard :</strong> Vue d'ensemble des évaluations (personnelles, équipe, région)</li>
+                        <li><strong>Tableaux de Bord & Analytics :</strong> KPIs, statistiques, analytics (selon rôle : Directeurs, DG)</li>
+                        <li><strong>Notifications :</strong> Alertes et rappels</li>
+                        <li><strong>Profil :</strong> Gestion du profil utilisateur</li>
+                    </ul>
+
+                    <h4>🔧 Application Backoffice (Administration)</h4>
+                    <ul>
+                        <li><strong>Gestion Utilisateurs :</strong> CRUD utilisateurs, attribution des rôles</li>
+                        <li><strong>Gestion Habilitations :</strong> Configuration RBAC, permissions</li>
+                        <li><strong>Gestion Modèles d'Évaluation :</strong> CRUD formulaires, champs dynamiques</li>
+                        <li><strong>Structure Organisationnelle :</strong> Gestion agences, régions, zones</li>
+                        <li><strong>Audit Logs :</strong> Consultation traçabilité, rapports</li>
+                        <li><strong>Configuration Système :</strong> Paramètres globaux</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Architecture Globale -->
+        <div class="section" id="architecture-globale">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>2. ARCHITECTURE GLOBALE</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <p>
+                        L'architecture proposée est une <strong>architecture monolithique modulaire</strong> avec
+                        <strong>2 frontends séparés</strong> partageant le même backend API. Cette séparation permet :
+                    </p>
+                    <ul>
+                        <li>Une expérience utilisateur optimisée pour chaque type d'utilisateur</li>
+                        <li>Un déploiement indépendant des applications frontend</li>
+                        <li>Une meilleure sécurité avec des domaines séparés</li>
+                        <li>Un code frontend plus simple et maintenable</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>Diagramme d'Architecture</h3>
+                    <div class="diagram">
+<pre>
+┌────────────────────────────────────────────────────────────────────────────────┐
+│                              UTILISATEURS FINAUX                                │
+│                                                                                  │
+│    Animateurs, Directeurs              Administrateurs, Super Admins           │
+│    ↓                                    ↓                                        │
+└────┬────────────────────────────────────┬───────────────────────────────────────┘
+     │ HTTPS/TLS                          │ HTTPS/TLS
+     │                                    │
+┌────▼─────────────────────┐    ┌────────▼──────────────────────┐
+│   FOLLOW UP FRONTEND     │    │   BACKOFFICE FRONTEND         │
+│   (Microfrontend Terrain)│    │   (Microfrontend Admin)       │
+│                          │    │                                │
+│   • Angular 15 + TS      │    │   • Angular 15 + TS           │
+│   • Single-SPA (MF)      │    │   • Single-SPA (MF)           │
+│   • eai-lib-material     │    │   • eai-lib-material          │
+│   • @ngx-translate       │    │   • @ngx-translate            │
+│   • RxJS                 │    │   • RxJS                      │
+│   • HttpClient           │    │   • HttpClient                │
+│                          │    │                                │
+│   GitLab: msiboa-cc-mf-  │    │   GitLab: msiboa-cc-mf-       │
+│   followup-client        │    │   followup-admin              │
+│                          │    │                                │
+│   www.followup           │    │   www.followup-admin          │
+│   .bmcebank.co.ma        │    │   .bmcebank.co.ma             │
+└────┬─────────────────────┘    └────────┬──────────────────────┘
+     │                                    │
+     │ REST API (JSON)                    │ REST API (JSON)
+     └────────────────┬───────────────────┘
+                      │
+         ┌────────────▼───────────────┐
+         │   NGINX REVERSE PROXY      │
+         │   (Load Balancer, SSL)     │
+         └────────────┬───────────────┘
+                      │
+         ┌────────────▼───────────────┐
+         │   BACKEND API              │
+         │   (Socle EAI - Hexagonal)  │
+         │                            │
+         │   • Socle msiboa-api-parent│
+         │   • Spring Boot + Java 17  │
+         │   • Architecture Hexagonale│
+         │   • Keycloak + LDAP        │
+         │   • Apache Kafka           │
+         │   • Spring Data JPA        │
+         │                            │
+         │   GitLab: msiboa-oc-api-   │
+         │   followup-serveur        │
+         │                            │
+         │   www.followup-api         │
+         │   .bmcebank.co.ma          │
+         └────────────┬───────────────┘
+                      │
+         ┌────────────┴───────────────────────────────┐
+         │                                             │
+    ┌────▼──────────────┐            ┌───────────────▼────────────┐
+    │  PostgreSQL 15    │            │   Services Externes        │
+    │                   │            │                            │
+    │  • Données métier │            │  • Keycloak (SSO socle)    │
+    │  • Utilisateurs   │            │  • ASAL (Annuaire SOAP)    │
+    │  • Audit logs     │            │  • Kafka (Messaging socle) │
+    │  • Configurations │            │                            │
+    └───────────────────┘            └────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Principes Architecturaux (Socle EAI)</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>🏗️ Architecture Hexagonale</h4>
+                            <p>Backend structuré en Ports & Adapters pour une séparation métier/technique</p>
+                        </div>
+                        <div class="card">
+                            <h4>📱 Microfrontends Angular</h4>
+                            <p>Single-SPA pour des applications modulaires et indépendantes</p>
+                        </div>
+                        <div class="card">
+                            <h4>🎨 eai-lib-material</h4>
+                            <p>Composants UI standardisés EAI, validés par l'équipe architecture</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔐 Keycloak SSO</h4>
+                            <p>Authentification centralisée avec intégration LDAP/AD</p>
+                        </div>
+                        <div class="card">
+                            <h4>📨 Apache Kafka</h4>
+                            <p>Messaging asynchrone pour events et notifications</p>
+                        </div>
+                        <div class="card">
+                            <h4>📇 ASAL Intégré</h4>
+                            <p>Annuaire collaborateurs BOA via SOAP (recette validée)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2.5: Projets GitLab -->
+        <div class="section" id="projets-gitlab">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>2.5 PROJETS GITLAB & URLS</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Projets GitLab</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>Repository GitLab</th>
+                                <th>URL de Production</th>
+                                <th>Technologies</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Backend API</strong></td>
+                                <td><code>msiboa-oc-api-followup-serveur</code></td>
+                                <td><a href="https://www.followup-api.bmcebank.co.ma" target="_blank">www.followup-api.bmcebank.co.ma</a></td>
+                                <td>Socle EAI + Spring Boot + Java 17</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frontend Follow Up</strong></td>
+                                <td><code>msiboa-cc-mf-followup-client</code></td>
+                                <td><a href="https://www.followup.bmcebank.co.ma" target="_blank">www.followup.bmcebank.co.ma</a></td>
+                                <td>Angular 15 + Single-SPA + eai-lib-material</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frontend Backoffice</strong></td>
+                                <td><code>msiboa-cc-mf-followup-admin</code></td>
+                                <td><a href="https://www.followup-admin.bmcebank.co.ma" target="_blank">www.followup-admin.bmcebank.co.ma</a></td>
+                                <td>Angular 15 + Single-SPA + eai-lib-material</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Structure des Repositories</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>📦 msiboa-oc-api-followup-serveur</h4>
+                            <p><strong>Type:</strong> Backend API (Hexagonal)<br>
+                            <strong>Framework:</strong> Socle EAI + Spring Boot<br>
+                            <strong>Build:</strong> Maven (Multi-modules)<br>
+                            <strong>Port:</strong> 8080</p>
+                        </div>
+                        <div class="card">
+                            <h4>📦 msiboa-cc-mf-followup-client</h4>
+                            <p><strong>Type:</strong> Microfrontend Terrain<br>
+                            <strong>Framework:</strong> Angular 15 + Single-SPA<br>
+                            <strong>Build:</strong> npm + Angular CLI<br>
+                            <strong>Port:</strong> 9080</p>
+                        </div>
+                        <div class="card">
+                            <h4>📦 msiboa-cc-mf-followup-admin</h4>
+                            <p><strong>Type:</strong> Microfrontend Admin<br>
+                            <strong>Framework:</strong> Angular 15 + Single-SPA<br>
+                            <strong>Build:</strong> npm + Angular CLI<br>
+                            <strong>Port:</strong> 9081</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Configuration CORS Backend</h3>
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Important :</strong> Le backend doit autoriser les requêtes depuis les 2 domaines frontend :<br>
+                        <code>https://www.followup.bmcebank.co.ma</code><br>
+                        <code>https://www.followup-admin.bmcebank.co.ma</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Architecture Backend (inchangée mais avec nom GitLab) -->
+        <div class="section" id="backend">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>3. ARCHITECTURE BACKEND (SPRING BOOT)</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <div class="alert alert-info">
+                        <strong>Repository GitLab:</strong> <code>msiboa-oc-api-followup-serveur</code><br>
+                        <strong>URL Production:</strong> <a href="https://www.followup-api.bmcebank.co.ma" target="_blank">https://www.followup-api.bmcebank.co.ma</a>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <p>
+                        Le backend est structuré selon l'<strong>architecture hexagonale (Ports & Adapters)</strong> basée sur le
+                        <strong>socle EAI msiboa-api-parent</strong>. Cette architecture assure une séparation claire entre
+                        la logique métier et les adaptateurs techniques. Une seule API sert les deux frontends.
+                    </p>
+                    <div class="alert alert-info">
+                        <strong>Socle Parent :</strong> ma.eai.msiboa.api:msiboa-api-parent:2.0.10<br>
+                        <strong>Java :</strong> 17 LTS | <strong>Spring Boot :</strong> 3.x | <strong>Spring Cloud :</strong> 2025.0.0
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Architecture Hexagonale - Modules</h3>
+                    <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 msiboa-oc-api-followup-serveur (parent)                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                    followup-serveur-domain                       │   │
+│  │  ┌─────────────────────┐    ┌─────────────────────────────┐    │   │
+│  │  │   domain-core       │    │   application-service       │    │   │
+│  │  │   (Entités métier)  │    │   (Use Cases / Ports)       │    │   │
+│  │  └─────────────────────┘    └─────────────────────────────┘    │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+│                                    ▲                                    │
+│                                    │                                    │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌────────────┐ │
+│  │ application  │  │  dataaccess  │  │  messaging   │  │infrastructure│ │
+│  │ (REST API)   │  │  (JPA/DB)    │  │  (Kafka)     │  │ (ASAL/LDAP) │ │
+│  │  Controllers │  │  Repositories│  │  Producers   │  │  Adapters   │ │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └────────────┘ │
+│                                                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                   followup-serveur-container                     │   │
+│  │                   (Spring Boot Application)                      │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Structure Multi-Modules Maven</h3>
+                    <div class="file-tree">
+                        <div class="file-tree-item folder">
+                            <span class="icon">📦</span>msiboa-oc-api-followup-serveur/
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>pom.xml
+                            <span class="comment"># Parent POM (msiboa-api-parent)</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>followup-serveur-domain/
+                            <span class="comment"># Logique métier pure</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>domain-core/
+                            <span class="comment"># Entités, Value Objects</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>application-service/
+                            <span class="comment"># Use Cases, Ports (interfaces)</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>followup-serveur-application/
+                            <span class="comment"># REST Controllers</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>followup-serveur-dataaccess/
+                            <span class="comment"># JPA Repositories, Entities DB</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>followup-serveur-messaging/
+                            <span class="comment"># Kafka Producers/Consumers</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>followup-serveur-infrastructure/
+                            <span class="comment"># ASAL, LDAP, Keycloak adapters</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>followup-serveur-container/
+                            <span class="comment"># Spring Boot Main Application</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Intégrations Externes (Infrastructure)</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>🔐 Keycloak</h4>
+                            <p><strong>Authentification SSO</strong><br>
+                            Plugin socle pré-intégré</p>
+                        </div>
+                        <div class="card">
+                            <h4>📇 ASAL</h4>
+                            <p><strong>Annuaire collaborateurs</strong><br>
+                            SOAP - accesseur-asal<br>
+                            <span class="badge badge-success">Recette OK</span></p>
+                        </div>
+                        <div class="card">
+                            <h4>📨 Kafka</h4>
+                            <p><strong>Messaging asynchrone</strong><br>
+                            Events & notifications</p>
+                        </div>
+                        <div class="card">
+                            <h4>📨 Kafka</h4>
+                            <p><strong>Messaging asynchrone</strong><br>
+                            Notifications (socle EAI)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Frontend Follow Up -->
+        <div class="section" id="frontend-followup">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>4. FRONTEND FOLLOW UP (APPLICATION TERRAIN)</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <div class="alert alert-info">
+                        <strong>Repository GitLab:</strong> <code>msiboa-cc-mf-followup-client</code><br>
+                        <strong>URL Production:</strong> <a href="https://www.followup.bmcebank.co.ma" target="_blank">https://www.followup.bmcebank.co.ma</a><br>
+                        <strong>Architecture:</strong> Microfrontend Single-SPA | <strong>Port:</strong> 9080
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <p>
+                        Application <strong>Angular 15 Microfrontend (Single-SPA)</strong> dédiée aux <strong>animateurs et directeurs</strong>
+                        pour la saisie et le suivi des évaluations terrain. Basée sur le <strong>socle EAI</strong> avec la librairie
+                        <strong>eai-lib-material</strong> pour les composants UI standardisés.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Architecture Microfrontend Single-SPA</h3>
+                    <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│                     Shell Application (Root)                     │
+│                     Single-SPA Orchestrator                      │
+├─────────────────────────────────────────────────────────────────┤
+│                              │                                   │
+│  ┌───────────────────────────┴───────────────────────────────┐ │
+│  │       msiboa-cc-mf-followup-client (Microfrontend)         │ │
+│  │                                                             │ │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐    │ │
+│  │  │  Evaluation │  │  Dashboard  │  │  Notifications  │    │ │
+│  │  │   Module    │  │   Module    │  │     Module      │    │ │
+│  │  └─────────────┘  └─────────────┘  └─────────────────┘    │ │
+│  │                                                             │ │
+│  │  ┌─────────────────────────────────────────────────────┐  │ │
+│  │  │              eai-lib-material (UI Components)        │  │ │
+│  │  └─────────────────────────────────────────────────────┘  │ │
+│  └─────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Structure du Projet Angular</h3>
+                    <div class="file-tree">
+                        <div class="file-tree-item folder">
+                            <span class="icon">📦</span>msiboa-cc-mf-followup-client/
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>angular.json
+                            <span class="comment"># Configuration Angular</span>
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>package.json
+                            <span class="comment"># Dependencies (Angular 15, Single-SPA)</span>
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>extra-webpack.config.js
+                            <span class="comment"># Module Federation config</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>src/
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>app/
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>modules/
+                            <span class="comment"># Feature modules</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>shared/
+                            <span class="comment"># Composants partagés</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>core/
+                            <span class="comment"># Services, Guards, Interceptors</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>assets/
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>environments/
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>Dockerfile
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>.gitlab-ci.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Fonctionnalités Follow Up</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>📝 Saisie Évaluations</h4>
+                            <p>Formulaires dynamiques basés sur les modèles assignés</p>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Dashboard Terrain</h4>
+                            <p>Vue d'ensemble des évaluations personnelles et d'équipe</p>
+                        </div>
+                        <div class="card">
+                            <h4>📈 Analytics & KPIs</h4>
+                            <p>Tableaux de bord, statistiques, KPIs (Directeurs, DG)</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔍 Consultation</h4>
+                            <p>Historique des évaluations, filtres, recherche</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔔 Notifications</h4>
+                            <p>Alertes temps réel et rappels</p>
+                        </div>
+                        <div class="card">
+                            <h4>💾 Cache Navigateur</h4>
+                            <p>Service Worker pour cache des assets et amélioration performance</p>
+                        </div>
+                        <div class="card">
+                            <h4>📱 PWA</h4>
+                            <p>Installable sur mobile, icône écran d'accueil</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Stack Technique Follow Up</h3>
+                    <div class="alert alert-success">
+                        <strong>Technologies :</strong> Angular 15 • TypeScript 4.9 • Single-SPA 8 • eai-lib-material • @ngx-translate • RxJS 7.8 • Angular HttpClient • xlsx
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Frontend Backoffice -->
+        <div class="section" id="frontend-backoffice">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>5. FRONTEND BACKOFFICE (APPLICATION ADMIN)</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <div class="alert alert-info">
+                        <strong>Repository GitLab:</strong> <code>msiboa-cc-mf-followup-admin</code><br>
+                        <strong>URL Production:</strong> <a href="https://www.followup-admin.bmcebank.co.ma" target="_blank">https://www.followup-admin.bmcebank.co.ma</a><br>
+                        <strong>Architecture:</strong> Microfrontend Single-SPA | <strong>Port:</strong> 9081
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <p>
+                        Application <strong>Angular 15 Microfrontend (Single-SPA)</strong> dédiée aux <strong>administrateurs</strong>
+                        pour la gestion des utilisateurs, habilitations, modèles d'évaluation et configuration système.
+                        Basée sur le <strong>socle EAI</strong> avec la librairie <strong>eai-lib-material</strong>.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Structure du Projet Angular Admin</h3>
+                    <div class="file-tree">
+                        <div class="file-tree-item folder">
+                            <span class="icon">📦</span>msiboa-cc-mf-followup-admin/
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>angular.json
+                            <span class="comment"># Configuration Angular CLI</span>
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>package.json
+                            <span class="comment"># Dependencies (Angular 15, Single-SPA)</span>
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>extra-webpack.config.js
+                            <span class="comment"># Module Federation config</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="icon">📁</span>src/
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>app/
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>modules/
+                            <span class="comment"># Feature modules</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>users/
+                            <span class="comment"># Gestion utilisateurs</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>roles/
+                            <span class="comment"># Gestion habilitations</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>forms/
+                            <span class="comment"># Gestion modèles évaluation</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>organization/
+                            <span class="comment"># Structure organisationnelle</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>audit/
+                            <span class="comment"># Audit logs</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>shared/
+                            <span class="comment"># Composants partagés</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="indent"></span><span class="icon">📁</span>core/
+                            <span class="comment"># Services, Guards, Interceptors</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>assets/
+                            <span class="comment"># Images, i18n, styles</span>
+                        </div>
+                        <div class="file-tree-item folder">
+                            <span class="indent"></span><span class="indent"></span><span class="icon">📁</span>environments/
+                            <span class="comment"># Config par environnement</span>
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>Dockerfile
+                        </div>
+                        <div class="file-tree-item file">
+                            <span class="indent"></span><span class="icon">📄</span>.gitlab-ci.yml
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Fonctionnalités Backoffice</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>👥 Gestion Utilisateurs</h4>
+                            <p>CRUD complet, import CSV, activation/désactivation</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔐 Gestion Habilitations</h4>
+                            <p>RBAC, attribution rôles, matrice de permissions</p>
+                        </div>
+                        <div class="card">
+                            <h4>📝 Gestion Modèles</h4>
+                            <p>Form builder drag & drop, champs dynamiques, validation</p>
+                        </div>
+                        <div class="card">
+                            <h4>🏢 Structure Orga</h4>
+                            <p>Arbre hiérarchique, agences, régions, zones</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔍 Audit Logs</h4>
+                            <p>Traçabilité complète, filtres avancés, exports</p>
+                        </div>
+                        <div class="card">
+                            <h4>⚙️ Configuration</h4>
+                            <p>Paramètres système, sync LDAP manuel</p>
+                        </div>
+                        <div class="card">
+                            <h4>📧 Notifications</h4>
+                            <p>Configuration templates email, historique</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Stack Technique Backoffice</h3>
+                    <div class="alert alert-success">
+                        <strong>Technologies :</strong> Angular 15 • TypeScript 4.9 • Single-SPA 8 • eai-lib-material • @ngx-translate • RxJS 7.8 • Angular HttpClient • xlsx
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Base de données (suite du contenu...) -->
+        <div class="section" id="database">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>6. ARCHITECTURE BASE DE DONNÉES</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <p>
+                        Le modèle de données est conçu pour supporter l'ensemble des fonctionnalités métier avec
+                        une structure normalisée, des contraintes d'intégrité référentielle strictes, et des index
+                        optimisés pour les performances.
+                    </p>
+                </div>
+
+                <div class="subsection">
+                    <h3>Tables Principales</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Table</th>
+                                <th>Description</th>
+                                <th>Cardinalité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>users</strong></td>
+                                <td>Utilisateurs de l'application (animateurs, directeurs, admins)</td>
+                                <td>~500 users</td>
+                            </tr>
+                            <tr>
+                                <td><strong>organizations</strong></td>
+                                <td>Structure organisationnelle (agences, régions, zones)</td>
+                                <td>~200 unités</td>
+                            </tr>
+                            <tr>
+                                <td><strong>roles</strong></td>
+                                <td>Rôles et permissions RBAC</td>
+                                <td>5-10 rôles</td>
+                            </tr>
+                            <tr>
+                                <td><strong>forms</strong></td>
+                                <td>Définitions des formulaires (templates d'évaluation)</td>
+                                <td>10-20 forms</td>
+                            </tr>
+                            <tr>
+                                <td><strong>form_fields</strong></td>
+                                <td>Champs dynamiques des formulaires</td>
+                                <td>100-200 fields</td>
+                            </tr>
+                            <tr>
+                                <td><strong>evaluations</strong></td>
+                                <td>Évaluations réalisées (données métier)</td>
+                                <td>~10K/an</td>
+                            </tr>
+                            <tr>
+                                <td><strong>evaluation_responses</strong></td>
+                                <td>Réponses aux champs d'évaluation</td>
+                                <td>~100K/an</td>
+                            </tr>
+                            <tr>
+                                <td><strong>audit_logs</strong></td>
+                                <td>Logs d'audit complets (traçabilité)</td>
+                                <td>~50K/an</td>
+                            </tr>
+                            <tr>
+                                <td><strong>notifications</strong></td>
+                                <td>Notifications push et email</td>
+                                <td>~20K/an</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Intégration ASAL -->
+        <div class="section" id="asal">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>7. INTÉGRATION ASAL (ANNUAIRE COLLABORATEURS)</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <div class="alert alert-success">
+                        <strong>✓ Statut : Environnement recette fonctionnel</strong><br>
+                        Contact : Badr MERZAQ | Documentation technique reçue et validée
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Caractéristiques Techniques</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Élément</th>
+                                <th>Valeur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Protocole</strong></td>
+                                <td>SOAP 1.2 / HTTPS</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alias UDDI</strong></td>
+                                <td><code>accesseur-asal</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Codes de test</strong></td>
+                                <td>GRCTST01 à GRCTST10</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code Banque</strong></td>
+                                <td>02281 (BMCE) / 02282 (RMAW)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code Fédération</strong></td>
+                                <td>35 (BMCE) / 54 (RMAW)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Services ASAL Utilisés</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Recherche par code SAS</td>
+                                <td><code>RechSalCodeSasUC</code></td>
+                                <td>Récupère infos collaborateur par code SAS</td>
+                                <td><span class="badge badge-primary">Unitaire</span></td>
+                            </tr>
+                            <tr>
+                                <td>Recherche par matricule</td>
+                                <td><code>RechSalMatUC</code></td>
+                                <td>Récupère infos collaborateur par matricule</td>
+                                <td><span class="badge badge-primary">Unitaire</span></td>
+                            </tr>
+                            <tr>
+                                <td>Responsable guichet</td>
+                                <td><code>RechRespGuiUC</code></td>
+                                <td>Récupère le responsable d'un guichet</td>
+                                <td><span class="badge badge-primary">Unitaire</span></td>
+                            </tr>
+                            <tr>
+                                <td>Responsable N+1</td>
+                                <td><code>RechRespSupGuiUC</code></td>
+                                <td>Récupère le responsable N+1 d'un guichet</td>
+                                <td><span class="badge badge-primary">Unitaire</span></td>
+                            </tr>
+                            <tr>
+                                <td>Salariés d'un guichet</td>
+                                <td><code>RechListSalGuiUC</code></td>
+                                <td>Liste des salariés d'un guichet</td>
+                                <td><span class="badge badge-secondary">Liste</span></td>
+                            </tr>
+                            <tr>
+                                <td>Salariés d'un établissement</td>
+                                <td><code>RechListSalEtbUC</code></td>
+                                <td>Liste des salariés d'un établissement</td>
+                                <td><span class="badge badge-secondary">Liste</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>Données Retournées par ASAL</h3>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>👤 Identité</h4>
+                            <p>codeSas, nom, prénom, civilité, matricule</p>
+                        </div>
+                        <div class="card">
+                            <h4>📧 Contact</h4>
+                            <p>email, lstTels (liste téléphones)</p>
+                        </div>
+                        <div class="card">
+                            <h4>🏢 Rattachement</h4>
+                            <p>codeGuichet, codeSection, codeObjOrg, libObjOrg, typeObjOrg</p>
+                        </div>
+                        <div class="card">
+                            <h4>💼 Emploi</h4>
+                            <p>codEmploi, libEmploi, codeBanque, codeFede</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Prérequis pour Tester ASAL</h3>
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Ouverture réseau requise :</strong><br><br>
+                        <strong>URL :</strong> <code>https://vip-proxy-webfarm-dy.eurafric.com/flux/home.jsp</code><br>
+                        <strong>IP :</strong> <code>10.241.184.110</code><br>
+                        <strong>Port :</strong> <code>443</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="deploiement">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>8. ARCHITECTURE DE DÉPLOIEMENT</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Architecture Docker - 3 Applications</h3>
+                    <div class="diagram">
+<pre>
+┌───────────────────────────────────────────────────────────────────────┐
+│                       Docker Compose Stack                             │
+├───────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  ┌──────────────────────────────────────────────────────────────┐    │
+│  │                     NGINX Reverse Proxy                       │    │
+│  │                                                                │    │
+│  │  • www.followup.bmcebank.co.ma                                │    │
+│  │    ──────> msiboa-cc-mf-followup-client:9080                  │    │
+│  │                                                                │    │
+│  │  • www.followup-admin.bmcebank.co.ma                          │    │
+│  │    ──────> msiboa-cc-mf-followup-admin:9081                   │    │
+│  │                                                                │    │
+│  │  • www.followup-api.bmcebank.co.ma                            │    │
+│  │    ──────> msiboa-oc-api-followup-serveur:8080                │    │
+│  │                                                                │    │
+│  │  Port: 80, 443 | SSL Termination | Load Balancer             │    │
+│  └─────────┬────────────────────────┬───────────────┬────────────┘    │
+│            │                        │               │                 │
+│  ┌─────────▼──────────┐   ┌────────▼─────────┐  ┌─▼──────────────┐  │
+│  │  msiboa-cc-mf-     │   │  msiboa-cc-mf-   │  │ msiboa-oc-api- │  │
+│  │  followup-client   │   │  followup-admin  │  │ followup-serveur│  │
+│  │  Angular 15        │   │  Angular 15      │  │  Socle EAI     │  │
+│  │  Single-SPA        │   │  Single-SPA      │  │  Port: 8080    │  │
+│  │  Port: 9080        │   │  Port: 9081      │  │  JVM 17        │  │
+│  └────────────────────┘   └──────────────────┘  └─┬──────────────┘  │
+│                                                    │                 │
+│                                          ┌─────────▼────────┐        │
+│                                          │  PostgreSQL 15   │        │
+│                                          │   Port: 5432     │        │
+│                                          │   Volume: data   │        │
+│                                          └──────────────────┘        │
+└───────────────────────────────────────────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Domaines et URLs</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>Repository GitLab</th>
+                                <th>Domaine Production</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Follow Up</strong></td>
+                                <td><code>msiboa-cc-mf-followup-client</code></td>
+                                <td><a href="https://www.followup.bmcebank.co.ma" target="_blank">www.followup.bmcebank.co.ma</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Backoffice</strong></td>
+                                <td><code>msiboa-cc-mf-followup-admin</code></td>
+                                <td><a href="https://www.followup-admin.bmcebank.co.ma" target="_blank">www.followup-admin.bmcebank.co.ma</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>API Backend</strong></td>
+                                <td><code>msiboa-oc-api-followup-serveur</code></td>
+                                <td><a href="https://www.followup-api.bmcebank.co.ma" target="_blank">www.followup-api.bmcebank.co.ma</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 12: Stratégie de Tests -->
+        <div class="section" id="tests">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>12. STRATÉGIE DE TESTS</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>12.1 Tests Frontend</h3>
+
+                    <h4>Tests Unitaires & Composants</h4>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>⚡ Jasmine</h4>
+                            <p><strong>Framework de test</strong><br>
+                            Framework BDD intégré à Angular</p>
+                        </div>
+                        <div class="card">
+                            <h4>🧪 Karma</h4>
+                            <p><strong>Test runner</strong><br>
+                            Exécution tests dans navigateur réel</p>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Test Coverage</h4>
+                            <p><strong>Objectif : >80%</strong><br>
+                            Istanbul pour mesure coverage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>12.2 Tests Backend</h3>
+
+                    <h4>Tests Unitaires Java</h4>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>☕ JUnit 5</h4>
+                            <p><strong>Framework principal</strong><br>
+                            Tests unitaires services & logique métier</p>
+                        </div>
+                        <div class="card">
+                            <h4>🎭 Mockito</h4>
+                            <p><strong>Mocking framework</strong><br>
+                            Mock dependencies, isolation tests</p>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Test Coverage</h4>
+                            <p><strong>Objectif : >70%</strong><br>
+                            JaCoCo pour mesure coverage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>12.3 Pyramide de Tests</h3>
+                    <div class="diagram">
+<pre>
+                    ┌─────────────────┐
+                    │   E2E Tests     │  (10% - Playwright)
+                    │   UI complets   │
+                    └─────────────────┘
+                ┌───────────────────────┐
+                │  Integration Tests    │  (20% - Testcontainers)
+                │  API + DB             │
+                └───────────────────────┘
+        ┌───────────────────────────────────┐
+        │      Unit Tests                   │  (70% - Jasmine/Karma + JUnit)
+        │      Logique métier               │
+        └───────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 13: Performance & Optimisations -->
+        <div class="section" id="performance">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>13. PERFORMANCE & OPTIMISATIONS</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>13.1 Optimisations Frontend Angular</h3>
+
+                    <h4>Lazy Loading Modules</h4>
+                    <div class="alert alert-info">
+                        <strong>Techniques :</strong> Angular Router avec <code>loadChildren</code> pour le chargement différé des feature modules<br>
+                        • Réduction du bundle initial<br>
+                        • Chargement à la demande des modules
+                    </div>
+
+                    <h4>Change Detection Strategy</h4>
+                    <div class="alert alert-info">
+                        <strong>OnPush Strategy :</strong> <code>changeDetection: ChangeDetectionStrategy.OnPush</code><br>
+                        • Réduit les cycles de détection de changements<br>
+                        • Améliore significativement les performances<br>
+                        • Utiliser avec Observables (async pipe)
+                    </div>
+
+                    <h4>Virtual Scrolling</h4>
+                    <div class="alert alert-info">
+                        <strong>CDK Virtual Scrolling :</strong> <code>@angular/cdk/scrolling</code><br>
+                        • <code>cdk-virtual-scroll-viewport</code> pour listes longues<br>
+                        • Rend uniquement les éléments visibles<br>
+                        • Intégré au Angular CDK
+                    </div>
+
+                    <h4>TrackBy Functions</h4>
+                    <div class="alert alert-info">
+                        <strong>Optimisation *ngFor :</strong> Utiliser <code>trackBy</code> pour éviter les re-renders inutiles des listes<br>
+                        • <code>*ngFor="let item of items; trackBy: trackById"</code>
+                    </div>
+
+                    <h4>AOT Compilation & Tree Shaking</h4>
+                    <div class="alert alert-info">
+                        <strong>Build optimisé :</strong> Ahead-of-Time compilation activée par défaut en production<br>
+                        • Tree shaking pour éliminer le code mort<br>
+                        • Minification et compression automatiques
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>13.2 Optimisations Backend</h3>
+
+                    <h4>Pagination & Filtering</h4>
+                    <div class="alert alert-info">
+                        <strong>Spring Data JPA :</strong> Pagination native avec Pageable + filtres dynamiques
+                    </div>
+
+                    <h4>Database Query Optimization</h4>
+                    <ul>
+                        <li><strong>N+1 Query Problem:</strong> Utiliser <code>@EntityGraph</code> ou <code>JOIN FETCH</code></li>
+                        <li><strong>Index strategy:</strong> Index sur colonnes de filtrage fréquentes</li>
+                        <li><strong>Projection:</strong> Utiliser DTO projections au lieu d'entités complètes</li>
+                        <li><strong>Connection Pooling:</strong> HikariCP (par défaut Spring Boot)</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>13.3 Métriques de Performance</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrique</th>
+                                <th>Objectif</th>
+                                <th>Outil de mesure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Time to Interactive (TTI)</strong></td>
+                                <td>< 3 secondes</td>
+                                <td>Lighthouse, WebPageTest</td>
+                            </tr>
+                            <tr>
+                                <td><strong>First Contentful Paint (FCP)</strong></td>
+                                <td>< 1.8 secondes</td>
+                                <td>Lighthouse</td>
+                            </tr>
+                            <tr>
+                                <td><strong>API Response Time</strong></td>
+                                <td>< 200ms (p95)</td>
+                                <td>Micrometer, Prometheus</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bundle Size</strong></td>
+                                <td>< 250 KB (initial)</td>
+                                <td>Angular CLI (ng build --stats-json), webpack-bundle-analyzer</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 14: Design System & UI/UX -->
+        <div class="section" id="design-system">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>14. DESIGN SYSTEM & UI/UX MODERNE</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>14.1 Design System - eai-lib-material (Socle EAI)</h3>
+
+                    <div class="alert alert-info">
+                        <strong>Pourquoi eai-lib-material ?</strong><br>
+                        • Composants standardisés et validés par l'architecture EAI<br>
+                        • Design conforme aux guidelines Eurafric Information<br>
+                        • Intégration native avec Angular 15<br>
+                        • Maintenance assurée par l'équipe socle (M. ALHABIB)<br>
+                        • Documentation et formation disponibles
+                    </div>
+
+                    <h4>Composants Principaux eai-lib-material</h4>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>🎨 Buttons</h4>
+                            <p>Boutons standardisés EAI avec variants</p>
+                        </div>
+                        <div class="card">
+                            <h4>📋 Forms</h4>
+                            <p>Angular Reactive Forms + Validators EAI</p>
+                        </div>
+                        <div class="card">
+                            <h4>🗂️ Data Tables</h4>
+                            <p>Tables avec sorting, filtering, pagination, export xlsx</p>
+                        </div>
+                        <div class="card">
+                            <h4>💬 Dialogs</h4>
+                            <p>Modals Angular Material CDK</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔔 Notifications</h4>
+                            <p>Snackbar et toasts EAI</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌐 i18n</h4>
+                            <p>@ngx-translate pour FR/EN/AR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>14.2 Accessibilité (WCAG 2.1 Level AA)</h3>
+
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>⌨️ Navigation Clavier</h4>
+                            <p>
+                                • Tab navigation<br>
+                                • Focus visible<br>
+                                • Skip links<br>
+                                • Raccourcis clavier
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 ARIA Labels</h4>
+                            <p>
+                                • aria-label<br>
+                                • aria-describedby<br>
+                                • role attributes<br>
+                                • Screen reader support
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h4>🎨 Contraste Couleurs</h4>
+                            <p>
+                                • Ratio 4.5:1 (texte normal)<br>
+                                • Ratio 3:1 (texte large)<br>
+                                • Outils: Contrast Checker
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h4>🧪 Tests Automatisés</h4>
+                            <p>
+                                • axe-core<br>
+                                • @axe-core/angular<br>
+                                • Tests Protractor/Playwright a11y
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="subsection">
+                    <h3>14.3 Features UX Modernes</h3>
+
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>🌐 Internationalisation</h4>
+                            <p>@ngx-translate avec fichiers JSON (FR, EN, AR)</p>
+                        </div>
+                        <div class="card">
+                            <h4>💀 Skeleton Loaders</h4>
+                            <p>Composants skeleton eai-lib-material pour états de chargement</p>
+                        </div>
+                        <div class="card">
+                            <h4>⚡ Loading States</h4>
+                            <p>Gestion états avec RxJS BehaviorSubject et async pipe</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔔 Toast Notifications</h4>
+                            <p>Snackbar Angular Material / eai-lib-material</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 15: Documentation API -->
+        <div class="section" id="documentation">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>15. DOCUMENTATION API</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>15.1 Swagger / OpenAPI 3.0</h3>
+
+                    <div class="alert alert-success">
+                        <strong>✓ Déjà présent</strong> dans le backend Spring Boot<br>
+                        URL (Recette): <code>https://www.followup-api.bmcebank.co.ma/swagger-ui.html</code>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>15.2 Postman Collections</h3>
+
+                    <div class="card-grid">
+                        <div class="card">
+                            <h4>📬 Collections par Module</h4>
+                            <p>
+                                • Authentication<br>
+                                • Evaluations<br>
+                                • Users<br>
+                                • Forms<br>
+                                • Admin
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h4>🔐 Environnements</h4>
+                            <p>
+                                • Local<br>
+                                • Dev<br>
+                                • Recette<br>
+                                • Production
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h4>🧪 Tests Automatisés</h4>
+                            <p>
+                                • Pre-request scripts<br>
+                                • Tests assertions<br>
+                                • Variables globales<br>
+                                • Newman CLI
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="subsection">
+                    <h3>15.3 API Changelog</h3>
+
+                    <div class="alert alert-info">
+                        <strong>Format recommandé :</strong> Keep a Changelog<br>
+                        Fichier <code>CHANGELOG.md</code> dans le repository backend
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>15.4 Documentation Interactive</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Outil</th>
+                                <th>URL / Emplacement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Swagger UI</strong></td>
+                                <td>SpringDoc OpenAPI</td>
+                                <td><a href="https://www.followup-api.bmcebank.co.ma/swagger-ui.html" target="_blank">API Swagger</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Postman</strong></td>
+                                <td>Collections partagées</td>
+                                <td>Workspace BOA Follow Up</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Changelog</strong></td>
+                                <td>Markdown</td>
+                                <td>msiboa-oc-api-followup-serveur/CHANGELOG.md</td>
+                            </tr>
+                            <tr>
+                                <td><strong>README</strong></td>
+                                <td>Markdown</td>
+                                <td>Chaque repository GitLab</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Maquettes UI/UX</strong></td>
+                                <td>Figma</td>
+                                <td><a href="https://www.figma.com/design/egjSewQnUHxSSyUZimkDD4/BOA-Follow-Up?node-id=170-2485" target="_blank">BOA-Follow-Up (Figma)</a> - Designer: Youssef Barouch</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Section 16: Stack Technique -->
+        <div class="section" id="stack">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>16. STACK TECHNIQUE COMPLÈTE</h2>
+                <span class="toggle">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Récapitulatif des Projets</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Projet</th>
+                                <th>Repository</th>
+                                <th>Stack Principal</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Backend API</strong></td>
+                                <td><code>msiboa-oc-api-followup-serveur</code></td>
+                                <td>Socle EAI + Spring Boot + Java 17</td>
+                                <td>www.followup-api.bmcebank.co.ma</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frontend Terrain</strong></td>
+                                <td><code>msiboa-cc-mf-followup-client</code></td>
+                                <td>Angular 15 + Single-SPA + eai-lib-material</td>
+                                <td>www.followup.bmcebank.co.ma</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frontend Admin</strong></td>
+                                <td><code>msiboa-cc-mf-followup-admin</code></td>
+                                <td>Angular 15 + Single-SPA + eai-lib-material</td>
+                                <td>www.followup-admin.bmcebank.co.ma</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p><strong>Bank of Africa - Document Confidentiel</strong></p>
+        <p>Architecture Technique - BOA Follow Up MVP</p>
+        <p>© 2026 Eurafric BMCE - Tous droits réservés</p>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.toggle');
+
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
+                header.classList.remove('collapsed');
+                toggle.textContent = '▼';
+            } else {
+                content.classList.add('collapsed');
+                header.classList.add('collapsed');
+                toggle.textContent = '▼';
+            }
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
